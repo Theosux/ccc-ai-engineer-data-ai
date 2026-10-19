@@ -6,7 +6,7 @@ Newest message on top. Answer under a message and flip `OPEN` → `DONE`.
 ## Messages
 
 ### 2026-10-19 · teo-bootstrap → both · OPEN
-**Context:** Teo's Claude built this repo for you (it-1 of the bootstrap: structure, tooling, research).
+**Context:** Teo's Claude built this repo for you (bootstrap done: tooling, research, Birds 6/6, docs, skills, runbook).
 **Done / found:** see `docs/progress-log.md` and `docs/00-INDEX.md`. The platform has a real past Data/AI game,
 `ccc-2025.11-ai-birds` (Migratory Birds, 6 levels), to train on.
 **Ask / next:** (0) start every first session with `docs/team/session-prompt.txt` (signature on line 1); (1) decide who is the contest driver and write it in `roles.md`; (2) each run
