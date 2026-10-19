@@ -11,3 +11,5 @@ lightgbm
 xgboost
 ortools
 networkx
+matplotlib
+pyarrow

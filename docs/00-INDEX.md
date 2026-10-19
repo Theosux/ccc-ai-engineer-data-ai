@@ -15,6 +15,8 @@
 ## Research (`docs/research/`)
 | File | Purpose |
 |---|---|
+| [agent-A-contest-facts.md](research/agent-A-contest-facts.md) | Raw report: Data/AI editions 2021–2025, format, ranking, rules, leaderboards, participant repos (§5b Birds spoiler) |
+| [agent-B-problems-strategy.md](research/agent-B-problems-strategy.md) | Raw report: past problems, typical progression, fast-baseline playbook, team workflow, environment (§1.1 Birds spoiler) |
 
 ## Strategy (`docs/strategy/`)
 | File | Purpose |
@@ -23,11 +25,20 @@
 ## Problem-solving knowledge (`docs/knowledge/`)
 | File | Purpose |
 |---|---|
+| [data-ai-patterns.md](knowledge/data-ai-patterns.md) | "Level says X → do Y → use Z", trap checklist, output rules, `lib/ml.py` API |
+| [ml-playbook.md](knowledge/ml-playbook.md) | Step-by-step procedure per level under time pressure; ladder when not passing; score-in-verdict |
+| [past-games.md](knowledge/past-games.md) | Level-by-level: Migratory Birds (our 6/6 run, SPOILER), Spy Mission, Dancing Bees, Smart Farming, Production Line |
+| [datasets.md](knowledge/datasets.md) | Training material: Birds on the platform + offline repos of past games |
+| [resources.md](knowledge/resources.md) | Installed / optional packages, pre-downloads, references |
 
 ## Custom skills (`.claude/skills/`)
 | Skill | Purpose |
 |---|---|
 | `ccc-ai-context` | The ritual: signature, pull, reload context, read handoff messages |
+| `ccc-ai-solve` | Fast loop per level: fetch → traps + CV → solve.py with `check()` → `go` → read score |
+| `ccc-ai-patterns` | Technique cheat sheet + `lib/ml.py` skeleton and decision rules (with ccc-ai-solve) |
 
 ## Other
 - [progress-log.md](progress-log.md): dated, signed session log
+- `arena/`: CLI `ccc.py`, `golive.py`, `lib/` (incl. `ml.py`), runs. See [arena/README.md](../arena/README.md). Tests: `python arena/lib/tests/test_lib.py`, `python arena/lib/tests/test_ml.py`, `python arena/tests/test_golive.py`
+- `arena/runs/SPOILER-birds/`: our Migratory Birds solvers (6/6), do not open before a cold rehearsal
