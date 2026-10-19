@@ -27,5 +27,5 @@ arena/runs/*/level*/models/
 *.safetensors
 arena/runs/*/level*/files/*.zip
 # big level inputs (>50 MB breaks GitHub pushes): re-fetch with `ccc.py fetch N`
-arena/runs/*/level*/files/all_data_from_level_*.in
+arena/runs/SPOILER-birds/level6/files/all_data_from_level_5.in
 arena/runs/SPOILER-birds/level5/files/in_level-5_1-main.txt
