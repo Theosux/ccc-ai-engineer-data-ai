@@ -1,8 +1,8 @@
 {
   "score": {
     "gameScore": {
-      "timeMs": 1792427901044,
-      "level": 3
+      "timeMs": 1792428672296,
+      "level": 7
     },
     "state": {
       "level1": {
@@ -121,10 +121,94 @@
       },
       "level3": {
         "kind": "levels",
+        "passedAt": 1792427999313,
+        "submissions": [
+          {
+            "fileId": "1-a",
+            "submittedAt": 1792427998823,
+            "result": {
+              "correct": true,
+              "error": "All species correct."
+            },
+            "submittedBy": "teosux"
+          },
+          {
+            "fileId": "2-b",
+            "submittedAt": 1792427999055,
+            "result": {
+              "correct": true,
+              "error": "All species correct."
+            },
+            "submittedBy": "teosux"
+          },
+          {
+            "fileId": "3-c",
+            "submittedAt": 1792427999313,
+            "result": {
+              "correct": true,
+              "error": "All species correct."
+            },
+            "submittedBy": "teosux"
+          }
+        ],
         "passedFiles": {
-          "1-a": null,
-          "2-b": null,
-          "3-c": null
+          "1-a": 1792427998823,
+          "2-b": 1792427999055,
+          "3-c": 1792427999313
+        }
+      },
+      "level4": {
+        "kind": "levels",
+        "passedAt": 1792428117955,
+        "submissions": [
+          {
+            "fileId": "1-main",
+            "submittedAt": 1792428117955,
+            "result": {
+              "correct": true,
+              "error": "macro-F1 = 0.9885 (threshold 0.90)."
+            },
+            "submittedBy": "teosux"
+          }
+        ],
+        "passedFiles": {
+          "1-main": 1792428117955
+        }
+      },
+      "level5": {
+        "kind": "levels",
+        "passedAt": 1792428619484,
+        "submissions": [
+          {
+            "fileId": "1-main",
+            "submittedAt": 1792428619484,
+            "result": {
+              "correct": true,
+              "error": "Top-50 accuracy = 0.5687 (threshold 0.50)."
+            },
+            "submittedBy": "teosux"
+          }
+        ],
+        "passedFiles": {
+          "1-main": 1792428619484
+        }
+      },
+      "level6": {
+        "kind": "levels",
+        "passedAt": 1792428672296,
+        "submissions": [
+          {
+            "fileId": "1-main",
+            "submittedAt": 1792428672296,
+            "result": {
+              "correct": true,
+              "error": "Top-50 accuracy = 1.0000 (threshold 1.00)."
+            },
+            "submittedBy": "teosux"
+          }
+        ],
+        "passedFiles": {
+          "1-main": 1792428672296
         }
       }
     }

@@ -1,0 +1,63 @@
+[p1]
+Level 6
+
+[p2]
+Level 6: Final Reckoning
+Fantastic!
+Your team was successful, and you caught Sir Chirp Alot.
+You thought the world was saved
+But … the last 30 days … the birds behavior was kind of … weird.
+And your windsurfing holiday too …
+And suddenly you receive a phone call …
+continue
+Sir Chirp Alot
+
+[p3]
+HAHAHAHAHAHAA!!1! You may have
+caught me, but with my last ounce of
+strength, I have activated my latest
+invention: the WeatherChanger 5000!
+Huahahaha! The birds will now behave
+completely differently, and you will
+never figure out how!!
+Sir Chirp Alot
+
+[p4]
+Level 6: Final Reckoning
+Well, your ornithology friends have also noticed the difference in
+bird migration recently.
+"It seems the wind has changed and is now blowing in exactly the
+opposite direction and the Hurracurra Worms are moving
+backwards too" says Dr. Oldfeather.
+It is always hard to tell what Dr. Oldfeather means, but the other
+experts are willing to provide you the data for the last 30 days,
+since Sir Chirp Alot put on his weather thingamajig.
+continue
+
+[p5]
+Level 6: Acceptance Criteria
+To show that no WeatherChanger 500 or anything else can throw you
+off track, predict the top 50 BOPs with the highest Arrivals counts for
+the next day (Day 791).
+Submission sample (included in level_6.zip):
+We know you can do it, so the required accuracy is 100%.
+That’s it – good luck in this final level!
+submit
+Day,Top 50 Arrivals BOPs
+791,863 1766 1131 ...
+Level 6: Final Reckoning
+continue
+• You have records of BOP information for another 30 days for analysis.
+• You might reuse data from level 5 (included in level_6.zip)
+CSV Data:
+Day, BOP, Arrivals, Occupancy, Wind X [m/s],
+Wind Y [m/s], Insects Delta [g/m²]
+761, 1, 112, 580, 0.02, -0.05, 0.16
+761, 2, 81, 316, 0.02, -0.05, 0.16
+...
+790, 2499, 433, 447, -0.49, -0.04, 0.09
+790, 2500, 148, 160, -0.49, -0.04, 0.53
+note: The spaces after commas in this csv view are just for readability, they are not in real *.in files
+
+[p6]
+Good Luck!

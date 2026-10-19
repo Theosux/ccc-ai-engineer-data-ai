@@ -5,3 +5,8 @@
 {"t": 1792427937.3, "event": "fetch", "level": 3}
 {"t": 1792428003.0, "event": "pass", "level": 3}
 {"t": 1792428006.6, "event": "fetch", "level": 4}
+{"t": 1792428121.6, "event": "pass", "level": 4}
+{"t": 1792428144.1, "event": "fetch", "level": 5}
+{"t": 1792428623.1, "event": "pass", "level": 5}
+{"t": 1792428628.8, "event": "fetch", "level": 6}
+{"t": 1792428676.0, "event": "pass", "level": 6}
