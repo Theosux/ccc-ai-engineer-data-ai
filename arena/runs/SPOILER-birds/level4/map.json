@@ -1,0 +1,12 @@
+{
+  "scoredFiles": [
+    "1-main"
+  ],
+  "unscoredFiles": [
+    "0-example"
+  ],
+  "inputs": {
+    "files/in_level-4_0-example.txt": "0-example",
+    "files/in_level-4_1-main.txt": "1-main"
+  }
+}

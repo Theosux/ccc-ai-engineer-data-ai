@@ -51,6 +51,65 @@ def read_csv(data=None, clean=True, **kw):
     return df
 
 
+# ---------------------------------------------------------------- dirty values (Birds L1: "seventeen" in a numeric column)
+_UNITS = {w: i for i, w in enumerate("zero one two three four five six seven eight nine ten eleven twelve thirteen "
+                                     "fourteen fifteen sixteen seventeen eighteen nineteen".split())}
+_TENS = {w: 10 * i for i, w in enumerate("_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()) if i > 1}
+
+
+def word_num(s):
+    """'seventeen' -> 17, 'minus twenty-one' -> -21, 'one hundred and five' -> 105, 'two thousand' -> 2000; else None."""
+    w = re.sub(r"[-,]", " ", str(s).lower()).split()
+    sign, total, cur = 1, 0, 0
+    if w and w[0] in ("minus", "negative"):
+        sign, w = -1, w[1:]
+    if not w:
+        return None
+    for t in w:
+        if t in _UNITS:
+            cur += _UNITS[t]
+        elif t in _TENS:
+            cur += _TENS[t]
+        elif t == "hundred":
+            cur = (cur or 1) * 100
+        elif t in ("thousand", "million"):
+            total += (cur or 1) * (1000 if t == "thousand" else 10 ** 6)
+            cur = 0
+        elif t != "and":
+            return None
+    return sign * (total + cur)
+
+
+def to_num(col, report=True):
+    """Numeric Series from a messy column: number words, '12,5' decimal commas, stray units/spaces ('20°C').
+    Values that still fail become NaN; they are printed to stderr so you can decide (drop/impute/fix)."""
+    s = pd.Series(col)
+    out = pd.to_numeric(s, errors="coerce")
+    bad = out.isna() & s.notna()
+    for i in s.index[bad]:
+        v = str(s[i]).strip()
+        n = word_num(v)
+        if n is None:
+            m = re.fullmatch(r"\s*([-+]?\d+(?:[.,]\d+)?)\s*\D{0,4}\s*", v)
+            n = float(m.group(1).replace(",", ".")) if m else None
+        if n is not None:
+            out[i] = n
+    still = out.isna() & s.notna()
+    if report and bad.any():
+        log(f"  to_num({s.name}): fixed {int(bad.sum() - still.sum())}, unparsed {sorted(set(s[still].astype(str)))[:10]}")
+    return out
+
+
+def clean_numeric(df, cols=None, report=True):
+    """Apply to_num to every object column that is mostly numeric (or to `cols`). Returns df (modified copy)."""
+    df = df.copy()
+    for c in cols or df.columns:
+        # pandas 3 reads text as dtype "str", not object: test "not numeric" instead of "== object"
+        if not pd.api.types.is_numeric_dtype(df[c]) and (cols or pd.to_numeric(df[c], errors="coerce").notna().mean() > 0.5):
+            df[c] = to_num(df[c], report)
+    return df
+
+
 # ---------------------------------------------------------------- metrics (higher is better unless noted)
 def _metric(name):
     from sklearn import metrics as M

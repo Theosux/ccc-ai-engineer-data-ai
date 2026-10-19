@@ -1,0 +1,3 @@
+{"t": 1792427713.759618, "results": {"1-a": {"correct": false, "bad": [{"isCorrect": false, "caseState": "WRONG_SOLUTION", "startLineNumber": 0, "endLineNumberExcl": 1, "caseMessage": "Ordering does not match (0/5 positions correct)."}]}}}
+{"t": 1792427754.5210721, "results": {"1-a": {"correct": false, "bad": [{"isCorrect": false, "caseState": "WRONG_SOLUTION", "startLineNumber": 0, "endLineNumberExcl": 1, "caseMessage": "Ordering does not match (0/5 positions correct)."}]}}}
+{"t": 1792427787.8609643, "results": {"1-a": {"correct": true, "bad": []}, "2-b": {"correct": true, "bad": []}, "4-d": {"correct": true, "bad": []}, "3-c": {"correct": true, "bad": []}, "5-e": {"correct": true, "bad": []}}}

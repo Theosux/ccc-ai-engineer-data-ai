@@ -1,0 +1,132 @@
+{
+  "score": {
+    "gameScore": {
+      "timeMs": 1792427901044,
+      "level": 3
+    },
+    "state": {
+      "level1": {
+        "kind": "levels",
+        "passedAt": 1792427784239,
+        "submissions": [
+          {
+            "fileId": "1-a",
+            "submittedAt": 1792427710130,
+            "result": {
+              "correct": false,
+              "error": "Ordering does not match (0/5 positions correct)."
+            },
+            "submittedBy": "teosux"
+          },
+          {
+            "fileId": "1-a",
+            "submittedAt": 1792427750896,
+            "result": {
+              "correct": false,
+              "error": "Ordering does not match (0/5 positions correct)."
+            },
+            "submittedBy": "teosux"
+          },
+          {
+            "fileId": "1-a",
+            "submittedAt": 1792427783173,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "teosux"
+          },
+          {
+            "fileId": "2-b",
+            "submittedAt": 1792427783454,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "teosux"
+          },
+          {
+            "fileId": "4-d",
+            "submittedAt": 1792427783672,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "teosux"
+          },
+          {
+            "fileId": "3-c",
+            "submittedAt": 1792427783931,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "teosux"
+          },
+          {
+            "fileId": "5-e",
+            "submittedAt": 1792427784239,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "teosux"
+          }
+        ],
+        "passedFiles": {
+          "1-a": 1792427783173,
+          "2-b": 1792427783454,
+          "3-c": 1792427783931,
+          "4-d": 1792427783672,
+          "5-e": 1792427784239
+        }
+      },
+      "level2": {
+        "kind": "levels",
+        "passedAt": 1792427901044,
+        "submissions": [
+          {
+            "fileId": "3-c",
+            "submittedAt": 1792427899616,
+            "result": {
+              "correct": true,
+              "error": "RMSE = 2.6986 (limit 3.00)."
+            },
+            "submittedBy": "teosux"
+          },
+          {
+            "fileId": "1-a",
+            "submittedAt": 1792427900420,
+            "result": {
+              "correct": true,
+              "error": "RMSE = 2.5604 (limit 6.00)."
+            },
+            "submittedBy": "teosux"
+          },
+          {
+            "fileId": "2-b",
+            "submittedAt": 1792427901044,
+            "result": {
+              "correct": true,
+              "error": "RMSE = 2.5540 (limit 3.00)."
+            },
+            "submittedBy": "teosux"
+          }
+        ],
+        "passedFiles": {
+          "1-a": 1792427900420,
+          "2-b": 1792427901044,
+          "3-c": 1792427899616
+        }
+      },
+      "level3": {
+        "kind": "levels",
+        "passedFiles": {
+          "1-a": null,
+          "2-b": null,
+          "3-c": null
+        }
+      }
+    }
+  }
+}
