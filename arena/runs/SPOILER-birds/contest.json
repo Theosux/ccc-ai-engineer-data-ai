@@ -1,0 +1,28 @@
+{
+  "id": 11006,
+  "name": "training-ccc-2025.11-ai-birds-54290-7d88feee",
+  "slug": "training-ccc-2025-11-ai-birds-54290-7d88feee",
+  "contestType": "CLASSIC",
+  "status": "RUNNING",
+  "startTime": "2026-10-19T16:32:09.690953Z",
+  "registrationStartTime": "2026-10-19T16:32:09.690953Z",
+  "durationMinutes": 0,
+  "maxTeamSize": 1,
+  "editionName": null,
+  "gameSlug": "ccc-2025.11-ai-birds",
+  "gameName": "Migratory Birds",
+  "gameDescription": "Predict and classify migrating birds with machine learning",
+  "gameImage": null,
+  "gameBaseUrl": "https://birds.codingcontest.org/",
+  "gameTags": [
+    "CCC41",
+    "ai",
+    "data",
+    "levels"
+  ],
+  "venues": [],
+  "registrationCount": 1,
+  "totalLevels": 6,
+  "recruiting": false,
+  "serverNowMs": 1792427625861
+}

@@ -1,0 +1,13 @@
+# CCC Data/AI toolchain (verified on Windows, Python 3.14, 2026-10-19)
+requests
+playwright
+pypdf
+pypdfium2
+numpy
+pandas
+scipy
+scikit-learn
+lightgbm
+xgboost
+ortools
+networkx
