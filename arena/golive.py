@@ -489,7 +489,7 @@ def preflight(slug):
              if code == 200 else f"HTTP {code} {str(body)[:100]}")
     except BaseException as e:
         item(None, "token probe", repr(e)[:200])
-    item(ccc.PYPY.exists(), "PyPy", str(ccc.PYPY) if ccc.PYPY.exists() else "missing (optional)")
+    item(ccc.PYPY.exists() or None, "PyPy", str(ccc.PYPY) if ccc.PYPY.exists() else "missing (optional, not needed for ML)")
     try:
         p = subprocess.run([sys.executable, str(ccc.ARENA / "lib" / "tests" / "test_lib.py")], capture_output=True,
                            text=True, timeout=180)

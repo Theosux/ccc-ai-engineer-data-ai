@@ -15,6 +15,8 @@
 | `docs/strategy/contest-day-runbook.md` | contest driver | |
 | `arena/runs/<run>-<signature>/` | that person | never write into the other person's run folder |
 
-## Registration (fill in)
-- Data/AI team name on codingcontest.org: *(Teo's notes mention "The Posers"; confirm who is on it and the venue)*
-- Venue: *(TBD)*
+## Registration
+Verified by `golive.py --preflight` on Teo's account (2026-10-19):
+- Data/AI team **"The Posers"**, **3/3 members**, venue **CREIC Cluj-Napoca** (on-site, same venue as Teo's Classic team).
+- Teo is one of the 3 members but competes in CLASSIC at the same time, so in practice the team is Dobrin + Iustin.
+  *(Confirm the member list on codingcontest.org → My registrations; each person's own `--preflight` shows it.)*
