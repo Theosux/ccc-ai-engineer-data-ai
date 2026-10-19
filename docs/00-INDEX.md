@@ -6,6 +6,7 @@
 | [protocol.md](team/protocol.md) | How the two Claudes communicate through git: signature, session start/end, commit format, handoff format |
 | [roles.md](team/roles.md) | Contest driver, second opinion, file ownership, registration |
 | [handoff.md](team/handoff.md) | Message board between the Claudes (OPEN / DONE) |
+| [session-prompt.txt](team/session-prompt.txt) | The full starting prompt (fill `signature: ` on line 1, paste as the first message) |
 
 ## Contest facts (`docs/contest/`)
 | File | Purpose |

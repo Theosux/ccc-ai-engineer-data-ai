@@ -1,0 +1,168 @@
+signature: 
+
+(Write your name after "signature: " on the line above: either dobrin or iustin. Then paste this WHOLE file as
+your first message in Claude Code, opened inside the repo folder. After a /clear, a short message is enough:
+"signature: <name> — We are working on ccc data/ai check claude.md for context".)
+
+======================================================================================================
+PROMPT FOR CLAUDE CODE — CCC DATA/AI 2026 (team "The Posers")
+======================================================================================================
+
+You are my Claude Code partner for the Cloudflight Coding Contest (CCC), DATA/AI track. My name is on the first
+line ("signature: ..."). Read this whole prompt, then follow the SETUP and RITUAL sections, then tell me what you
+loaded and what we do next.
+
+------------------------------------------------------------------------------------------------------
+1. WHO, WHAT, WHEN
+------------------------------------------------------------------------------------------------------
+- Contest: **42nd DATA/AI CCC**, slug `42nd-data-ai-ccc-5873`, on codingcontest.org.
+  **Friday 23 October 2026, 13:00 UTC = 16:00 Romania time. 240 minutes, ends 20:00 Romania time.**
+- Team "The Posers", venue CREIC Cluj-Napoca (on-site). Members: Dobrin, Iustin (and Teo, who is registered
+  but competes in the CLASSIC contest at the same time, so he is NOT available during the contest).
+- Two people work on this, each with their own Claude Code subscription and their own laptop:
+  **dobrin** and **iustin**. Each Claude session is "signed" with one of these names.
+- Ranking: **levels completed, then time.** A level counts only when every scored file passes its threshold.
+  Clearing every level is what wins; then speed decides. 2025 winner (Migratory Birds, 6 levels): 85 minutes,
+  a 2-person team from Cluj. Our Claude-driven run of the same game took 16 minutes.
+- AI/LLM use: no public rule restricts it for any track (verified across the platform's code and terms). The
+  track is literally marketed for "training your own AI". On-site: no excessive downloads/streaming, so
+  pre-download big things before the contest.
+
+------------------------------------------------------------------------------------------------------
+2. THE REPOSITORY (shared memory between our two Claudes)
+------------------------------------------------------------------------------------------------------
+- GitHub: https://github.com/Theosux/ccc-ai-engineer-data-ai (private; Teo invited us).
+- If we are not inside a clone yet: `git clone https://github.com/Theosux/ccc-ai-engineer-data-ai.git`
+  and work from that folder. Everything important is in the repo:
+  - `CLAUDE.md`: project instructions and rules (read it first).
+  - `docs/00-INDEX.md`: map of every doc.
+  - `docs/team/protocol.md`: HOW the two Claudes communicate through git (signature, session start/end,
+    commit format, handoff messages). `docs/team/roles.md`: contest driver, ownership, registration.
+    `docs/team/handoff.md`: the message board between dobrin's and iustin's Claudes.
+  - `docs/contest/`: verified facts (overview, format-and-scoring, rules-and-ai-policy, platform).
+  - `docs/knowledge/`: data-ai-patterns (level type → technique → library function, trap checklist),
+    ml-playbook (procedure per level under time pressure), past-games (all 5 past Data/AI games, level by level;
+    the Migratory Birds section is a SPOILER), datasets, resources.
+  - `docs/strategy/`: workflow, contest-day-runbook, training-plan.
+  - `docs/research/`: raw research reports + a verification report (sources, corrections).
+  - `docs/progress-log.md`: dated, signed log of every session.
+  - `arena/`: the tooling. `arena/ccc.py` (CLI: login, train, fetch, run, probe, go, submit, info),
+    `arena/golive.py` (contest-day go-live automation + preflight), `arena/lib/` (helpers, incl. `lib/ml.py` for
+    pandas/sklearn/LightGBM), `arena/runs/<run>/levelN/` (statement, inputs, solve.py, outputs per level).
+  - `arena/runs/SPOILER-birds/`: finished solvers for all 6 levels of Migratory Birds. Do NOT open it before
+    a cold timed rehearsal on Birds.
+  - `.claude/skills/`: `ccc-ai-context` (session ritual), `ccc-ai-solve` (the per-level loop),
+    `ccc-ai-patterns` (ML cheat sheet). Use them.
+
+------------------------------------------------------------------------------------------------------
+3. SETUP (first session on this laptop only)
+------------------------------------------------------------------------------------------------------
+1. Clone the repo (above) if needed. Python 3.14 works (tested on Windows).
+2. `pip install -r requirements.txt` (requests, playwright, pypdf, pypdfium2, numpy, pandas, scipy,
+   scikit-learn, lightgbm, xgboost, ortools, networkx, matplotlib, pyarrow).
+3. Tests: `python arena/lib/tests/test_ml.py`, `python arena/lib/tests/test_lib.py`,
+   `python arena/tests/test_golive.py` must print ALL OK.
+4. Log in to codingcontest.org with MY OWN account: `python arena/ccc.py login` (opens an Edge window via
+   playwright; if Edge is missing, `python -m playwright install msedge`). Optional for automatic re-login:
+   create `arena/.auth/credentials.env` with `CCC_USER=...` and `CCC_PASS=...` (gitignored, never commit it).
+   Check: `python arena/golive.py --preflight` must show login OK and the DATA/AI registration (team The Posers).
+5. Write my signature into `.claude/signature.local` (gitignored).
+
+------------------------------------------------------------------------------------------------------
+4. RITUAL (every session start, also after /clear) = the `ccc-ai-context` skill
+------------------------------------------------------------------------------------------------------
+- `git pull --rebase`; read 00-INDEX, team/protocol.md, contest/, strategy/, the last 3 progress-log entries,
+  and every OPEN message in team/handoff.md addressed to me or to "both"; `git log --oneline -10`.
+- If `docs/team/roles.md` still says the contest driver is TBD: ASK ME who drives on contest day (dobrin or
+  iustin) and record it. Only the driver's laptop runs golive/go/submit on contest day.
+- Reply with a ≤6-line "Context loaded" summary: my signature, days left, what the other person pushed since my
+  last session, open messages for me, the next step.
+
+------------------------------------------------------------------------------------------------------
+5. HOW OUR TWO CLAUDES "COMMUNICATE"
+------------------------------------------------------------------------------------------------------
+- Git is the channel. Pull first, push often. Commit subject `[<signature>] <what changed>`, trailer
+  `Signed-off-by: <signature>`. No "Co-Authored-By: Claude" or other Claude attribution. Never force-push main.
+- Anything the other person (or their Claude) must know goes into `docs/team/handoff.md` as a message:
+  `### YYYY-MM-DD HH:MM · <from> → <to|both> · OPEN` with Context / Done-found / Ask-next. Write it for a Claude
+  that has no memory of my session: files, commands, numbers, results. The receiver answers under it and flips
+  OPEN → DONE.
+- Each person trains in their own run folder (`arena/runs/birds-dobrin/`, `arena/runs/birds-iustin/`).
+  Shared knowledge files are append-mostly; sign added sections.
+- Session end: signed progress-log entry (`## YYYY-MM-DD: <signature>: <title>` + Done / Findings / Next),
+  handoff message if needed, commit + pull --rebase + push, clean `git status`.
+
+------------------------------------------------------------------------------------------------------
+6. THE SOLVING WORKFLOW (per level; skills ccc-ai-solve + ccc-ai-patterns)
+------------------------------------------------------------------------------------------------------
+1. `python arena/ccc.py fetch N` prints the statement, input sizes, extra files, example input + expected output.
+   Extract: exact OUTPUT FORMAT (copy the example byte for byte: header row, separators, decimals, id order),
+   METRIC + THRESHOLD PER FILE (only in the PDF text; can differ per file), story sentences that are RULES,
+   which rows are train vs test. Image-only pages → `fetch N --png` and read the PNGs.
+2. One exploration script: TRAP HUNT (non-numeric values in numeric columns like "seventeen", unit clusters
+   like °F mixed into °C or Kelvin, NaN/"missing"/"?", outliers outside ranges given in the PDF, wrong-length
+   rows, duplicates; earlier levels' data is re-shipped with the same bugs) + a CV table with the PDF metric
+   (`lib.ml.best_model`). For time series: rolling-origin validation, never random CV. For exact/100%/password
+   levels: look for an exact relation to older data (reversal, shift, duplicate, reshape to an image).
+3. Write `arena/runs/<run>/levelN/solve.py` with the Write tool (stdin → stdout, diagnostics on stderr) and a
+   `check(data, out)` that validates the format, so `go` accepts predictions that differ from the example.
+4. `python arena/ccc.py go N` (long tool timeout; heavy training `--timeout 900`). It runs, checks, submits
+   sequentially, and **the verdict shows the achieved score, on CORRECT and on WRONG** (e.g.
+   "RMSE = 2.5604 (limit 6.00)"). On PASS it prints the next level.
+5. Not passing → ladder: re-read the story for a missed rule/trap → check the noise floor (all models equal =
+   hidden formula or feature needed) → better features from story/structure → model blend/seeds → class
+   weights/threshold tuning → after 15 min, second opinion from the other person.
+
+------------------------------------------------------------------------------------------------------
+7. WHAT PAST DATA/AI GAMES LOOKED LIKE (details: docs/knowledge/past-games.md)
+------------------------------------------------------------------------------------------------------
+- 2021 Production Line (small images), 2022 Dancing Bees (30-letter sequences, imbalanced macro-F1 up to 98%),
+  spring 2023 Spy Mission (PCA, cleaning, Kelvin, RMSE ladder to 0.45, passwords hidden in plots/predictions),
+  autumn 2023 Smart Farming (drone images; only 3 teams finished), 2025 Migratory Birds (tabular, paths,
+  60 MB panel forecast, time-reversal puzzle).
+- Pattern: exact-answer data literacy first (sort/count/clean/PCA) → first model with a soft threshold →
+  harder metric or scale → a twist ("think, don't train"). Every game plants dirty data. The data is generated:
+  look for the formula/structure before tuning. Simple models (linear, ExtraTrees, LightGBM) pass most levels;
+  deep nets were needed only for images → keep pretrained CNN embeddings + LogReg as the image fallback.
+
+------------------------------------------------------------------------------------------------------
+8. HARD-WON RULES (each one cost real minutes in training)
+------------------------------------------------------------------------------------------------------
+- Traps before models, every level. Read every story page: the rules are in the prose.
+- Linear model first on regression (Birds L2: linear 2.58 RMSE beat LightGBM 2.92).
+- Files with no labels: train on labelled rows pooled from all files of the level.
+- Grade per group (flock/day): aggregate to one feature row per group.
+- Forecasting: validate at several cutoffs with the task's horizon; scores varied 0.42–0.70 by cutoff.
+- pandas 3 reads text columns as dtype "str", not "object" (use `pd.api.types.is_numeric_dtype`).
+- Submit only from ONE laptop (the server loses concurrent submits). Never pipe `go` into tail/grep and then
+  chain a submit. Write/Edit solvers, never heredoc/`python -c` patches. No side work while a level is unsolved.
+- Submit when CV clears the threshold with margin; one calibration submit is fine when validation is doubtful
+  (a wrong-submit penalty in 2026 is unconfirmed — don't spam).
+- Never commit inputs > 50 MB (add them to .gitignore; anyone can re-fetch).
+
+------------------------------------------------------------------------------------------------------
+9. CONTEST DAY (full timeline: docs/strategy/contest-day-runbook.md)
+------------------------------------------------------------------------------------------------------
+- Thu evening: git pull, pip install, driver runs `python arena/golive.py --preflight` (all OK), pre-download
+  optional model weights, charge laptops, phone hotspot ready.
+- Fri 15:00 at the venue: Wi-Fi, git pull, preflight. 15:30: open Claude Code (Opus; optional /fast at the
+  very start), ritual message, "contest is about to start".
+- 15:45: the driver's Claude starts `python arena/golive.py --browser` in the background. At 16:00 it registers
+  the contest run and prints level 1. Check `arena/runs/contest/game-info.json` for optimization levels.
+- Driver solves with the loop; the other person reads each PDF in parallel (rules, traps, metric, format) and
+  is the second opinion for stuck levels (solve on their own laptop with `run`/`probe` only, hand over through a
+  branch `alt-N`; the driver submits).
+- Fallbacks (login, zip download, manual drag-and-drop upload) are in the runbook.
+
+------------------------------------------------------------------------------------------------------
+10. WHAT TO DO NOW
+------------------------------------------------------------------------------------------------------
+1. Run SETUP (if first time) and the RITUAL.
+2. If the contest driver is not decided: ask me, write it in docs/team/roles.md, push.
+3. Follow docs/strategy/training-plan.md for today. The single most valuable exercise: a COLD, TIMED rehearsal
+   on Migratory Birds in Challenge mode with my own account:
+   `python arena/ccc.py train ccc-2025.11-ai-birds --mode challenge --name birds-<signature>` then `fetch 1`,
+   solving with the ccc-ai-solve loop, without opening SPOILER-birds or the spoiler sections of the docs.
+4. After every session: what slowed us down goes into the docs/lib (with a test), a signed progress-log entry,
+   a handoff message for the other person, push.
+5. Everything you learn that would help the other Claude: write it in the repo, not only in chat.
