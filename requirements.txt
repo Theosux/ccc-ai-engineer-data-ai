@@ -9,7 +9,9 @@ scipy
 scikit-learn
 lightgbm
 xgboost
-ortools
+ortools; sys_platform != "darwin"
+# macOS arm64: ortools 9.15 deadlocks CP-SAT with num_workers > 1 (M4 Pro, 2026-10-21); 9.14 works
+ortools==9.14.6206; sys_platform == "darwin"
 networkx
 matplotlib
 pyarrow
