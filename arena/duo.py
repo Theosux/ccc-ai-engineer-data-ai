@@ -5,11 +5,12 @@ alternative solvers back through git (main branch, each person in their own run 
                      python arena/duo.py share RUN --note 5 "WRONG 0.32 with ratio model"   # tell the teammate
                      python arena/duo.py take RUN 5                # pull teammate solvers -> level5/solve_<sig>.py
                      python arena/duo.py share RUN --done          # all levels passed: the shadow stops
-  shadow  (gurita):  python arena/duo.py shadow [--run RUN]        # wait for level 1, then hand over to Claude
+  shadow  (gurita):  python arena/duo.py shadow [--run RUN]        # wait for level 1, then start the agent
+                       [--agent auto|claude|cursor|paste] [--model SLUG]   # Cursor CLI: `agent --force`
                      python arena/duo.py status RUN                # pull, mirror new levels, show the open level
                      python arena/duo.py publish RUN 5 "CV 0.61, mirrored wind kNN"
 The shadow never talks to the platform: it reads the driver's levels from git and solves with `ccc.py run`
-(CCC_RUN=<RUN>-<sig>). Inputs over 45 MB travel as `<file>.duo.gz` (GitHub rejects files > 50 MB).
+(active run <RUN>-<sig>). Inputs over 45 MB travel as `<file>.duo.gz` (GitHub rejects files > 50 MB).
 """
 import argparse
 import gzip
@@ -199,7 +200,7 @@ def status(run, me, quiet=False):
           f"OPEN LEVEL {n}" + (f" (levels 1..{n - 1} passed)" if n > 1 else "")))
     if not done:
         print(f"  statement      {rel(mine / f'level{n}' / 'statement.txt')}")
-        print(f"  your folder    {rel(mine / f'level{n}')}   (CCC_RUN={run}-{me} python arena/ccc.py run {n})")
+        print(f"  your folder    {rel(mine / f'level{n}')}   (python arena/ccc.py run {n})")
         drv = src / f"level{n}" / "solve.py"
         print(f"  driver solver  {rel(drv) if drv.exists() else '(none shared yet)'}")
         notes = src / f"level{n}" / "DRIVER_NOTES.md"
@@ -212,6 +213,14 @@ def status(run, me, quiet=False):
 
 def cmd_status(a):
     status(a.run, sig())
+
+
+def cmd_activate(a):
+    """Shadow laptop only: mirror the driver's levels and make <run>-<sig> the active run for `ccc.py run`."""
+    me = sig()
+    status(a.run, me)
+    set_active(f"{a.run}-{me}")
+    print(f"active run: {a.run}-{me}")
 
 
 def cmd_publish(a):
@@ -242,21 +251,79 @@ def cmd_shadow(a):
             print(f"   {time.strftime('%H:%M:%S')} not shared yet", flush=True)
             t0 = time.time()
         time.sleep(10)
-    status(a.run, me)
+    lv, _ = status(a.run, me)
+    mine = RUNS / f"{a.run}-{me}"
+    set_active(mine.name)  # plain `python arena/ccc.py run N` works in any terminal/IDE, no CCC_RUN needed
     tpl = (REPO / "docs" / "strategy" / "shadow-prompt.md").read_text(encoding="utf-8")
-    prompt = tpl.replace("{{RUN}}", a.run).replace("{{SIG}}", me).replace("{{END}}", a.end)
-    claude = shutil.which("claude") or sys.exit("ERROR: `claude` not on PATH")
-    env = {**os.environ, "CCC_RUN": f"{a.run}-{me}"}
-    print(f"== handing over to Claude ({time.strftime('%H:%M:%S')})", flush=True)
+    pf = mine / "PROMPT.txt"
+    pf.write_text(tpl.replace("{{RUN}}", a.run).replace("{{SIG}}", me).replace("{{END}}", a.end), encoding="utf-8")
+    exclude(pf)
+    # the full prompt goes through a file: Windows .cmd wrappers (claude.cmd, agent.cmd) mangle multi-line arguments
+    prompt = (f"signature: {me}. SHADOW MODE. Read {rel(pf)} now and follow it exactly; it is your complete "
+              f"instruction for this session and replaces the usual session ritual. Start immediately.")
+    agent = pick_agent(a.agent)
+    print(f"\a== level 1 is shared ({time.strftime('%H:%M:%S')}); agent: {agent}", flush=True)
+    if agent == "paste":
+        print(f"\nPaste this into the Cursor chat (Agent mode); this window then announces each new level:\n\n{prompt}\n", flush=True)
+        watch(a.run, me, lv)
+        return
+    env = {**os.environ, "CCC_RUN": mine.name}
+    argv = agent_argv(agent, a.model, prompt, a.headless)
     if a.headless:
-        log = RUNS / f"{a.run}-{me}" / "shadow.log"
+        log = mine / "shadow.log"
         with log.open("w", encoding="utf-8") as f:
-            rc = subprocess.call([claude, "-p", "--dangerously-skip-permissions", "--model", "opus", prompt],
-                                 cwd=REPO, env=env, stdout=f, stderr=subprocess.STDOUT)
-        print(f"== Claude finished; log {rel(log)}")
+            rc = subprocess.call(argv, cwd=REPO, env=env, stdout=f, stderr=subprocess.STDOUT)
+        print(f"== {agent} finished; log {rel(log)}")
     else:
-        rc = subprocess.call([claude, "--dangerously-skip-permissions", "--model", "opus", prompt], cwd=REPO, env=env)
+        rc = subprocess.call(argv, cwd=REPO, env=env)
     sys.exit(rc)
+
+
+def set_active(name):
+    p = ARENA / ".auth" / "state.json"
+    try:
+        st = json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+    except json.JSONDecodeError:
+        st = {}
+    st.setdefault("runs", {})
+    st["active"] = name
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(st, indent=2), encoding="utf-8")
+
+
+def cursor_exe():
+    return shutil.which("agent") or shutil.which("cursor-agent")
+
+
+def pick_agent(want):
+    if want != "auto":
+        return want
+    return "claude" if shutil.which("claude") else "cursor" if cursor_exe() else "paste"
+
+
+def agent_argv(agent, model, prompt, headless):
+    if agent == "claude":
+        exe = shutil.which("claude") or sys.exit("ERROR: `claude` not on PATH")
+        return [exe, *(["-p"] if headless else []), "--dangerously-skip-permissions", "--model", model or "opus", prompt]
+    exe = cursor_exe() or sys.exit("ERROR: Cursor CLI `agent` not on PATH (install: https://cursor.com/cli)")
+    # --force: run commands without asking; no --model = the model chosen in Cursor (`agent models` lists slugs)
+    return [exe, *(["-p", "--output-format", "text"] if headless else []), "--force",
+            *(["--model", model] if model else []), prompt]
+
+
+def watch(run, me, lv):
+    """Paste mode: keep pulling and announce each newly opened level until the driver is done."""
+    last = lv[-1] if lv else 0
+    while True:
+        time.sleep(30)
+        lv, done = status(run, me, quiet=True)
+        if done:
+            print(f"\a== {time.strftime('%H:%M:%S')} driver: ALL LEVELS DONE. Stop.")
+            return
+        if lv and lv[-1] != last:
+            last = lv[-1]
+            print(f"\a== {time.strftime('%H:%M:%S')} LEVEL {last} OPEN: tell the agent "
+                  f"\"level {last} is open, run python arena/duo.py status {run}\"", flush=True)
 
 
 def main():
@@ -266,9 +333,13 @@ def main():
     p.add_argument("--done", action="store_true"); p.set_defaults(f=cmd_share)
     p = sp.add_parser("take"); p.add_argument("run"); p.add_argument("level", type=int); p.set_defaults(f=cmd_take)
     p = sp.add_parser("status"); p.add_argument("run"); p.set_defaults(f=cmd_status)
+    p = sp.add_parser("activate"); p.add_argument("run"); p.set_defaults(f=cmd_activate)
     p = sp.add_parser("publish"); p.add_argument("run"); p.add_argument("level", type=int); p.add_argument("note")
     p.set_defaults(f=cmd_publish)
     p = sp.add_parser("shadow"); p.add_argument("--run", default="contest"); p.add_argument("--headless", action="store_true")
+    p.add_argument("--agent", default="auto", choices=["auto", "claude", "cursor", "paste"],
+                   help="auto: claude if installed, else Cursor's `agent` CLI, else print the prompt to paste")
+    p.add_argument("--model", default="", help="claude default opus; cursor default = the model set in Cursor")
     p.add_argument("--end", default="20:00 Romania time (17:00 UTC)"); p.set_defaults(f=cmd_shadow)
     a = ap.parse_args()
     a.f(a)

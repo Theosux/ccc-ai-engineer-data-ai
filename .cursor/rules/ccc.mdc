@@ -1,0 +1,16 @@
+---
+description: CCC Data/AI contest repo, project rules for Cursor agents
+alwaysApply: true
+---
+This repo is shared by a Claude Code user (iustin, contest driver) and a Cursor user (gurita, second opinion).
+
+- `CLAUDE.md` is the project instruction file for every agent, not only Claude: read it first and follow its Rules.
+- Your signature is in `.claude/signature.local` (gitignored). Commits: subject `[<signature>] <what changed>`,
+  trailer `Signed-off-by: <signature>`, no AI attribution lines. `git pull --rebase` before every push, never force-push `main`.
+- `.claude/skills/*/SKILL.md` are plain markdown playbooks. When CLAUDE.md says "invoke the X skill", read
+  `.claude/skills/X/SKILL.md` and follow it. `ccc-ai-context` = session start, `ccc-ai-solve` + `ccc-ai-patterns` = solving a level.
+- Only the contest driver (see `docs/team/roles.md`) runs golive, `ccc.py go`, `submit` or `fetch` for the contest. The
+  second opinion works in shadow mode (`docs/strategy/shadow-prompt.md`, `arena/duo.py`) and only writes inside its own
+  run folder `arena/runs/<run>-<signature>/`.
+- Never commit `arena/.auth/` (credentials, cookies) or files over 50 MB. Never ask the user to paste a password into chat.
+- Talk to the other teammate's agent through `docs/team/handoff.md` (format in `docs/team/protocol.md`).

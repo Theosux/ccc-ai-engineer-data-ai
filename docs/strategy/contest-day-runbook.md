@@ -20,8 +20,13 @@ Levels unlock one at a time, so the second laptop does not take levels: it solve
 deliberately different approach and hands the solver over, so the driver has a second candidate ready when its own
 model fails (Birds L5: the first model scored 0.32, three probes followed).
 - Gurita: `bash arena/autopilot.sh --shadow` (macOS, `--schedule 15:30` works too) or `python arena/duo.py shadow`
-  (any OS). It waits until the driver shares level 1 through git, then runs Claude with
-  `docs/strategy/shadow-prompt.md`. **It never talks to the platform**: no golive, fetch, go or submit.
+  (any OS). It waits until the driver shares level 1 through git, then starts the agent with
+  `docs/strategy/shadow-prompt.md` (written to `arena/runs/contest-gurita/PROMPT.txt`). **It never talks to the
+  platform**: no golive, fetch, go or submit.
+- Agent: `--agent auto` picks `claude` if installed, else the Cursor CLI (`agent --force`, model from Cursor or
+  `--model <slug>` from `agent models`), else `--agent paste`: prints a one-line prompt to paste into Cursor's chat
+  (Agent mode) and keeps announcing each newly opened level. Gurita uses Cursor with Grok; `.cursor/rules/ccc.mdc`
+  points Cursor at CLAUDE.md and the skills.
 - Transport is git on `main`, each laptop only in its own folder (`arena/runs/contest/` vs `arena/runs/contest-gurita/`),
   so rebases never conflict. Inputs > 45 MB travel as `.duo.gz` (Birds L5: 58 MB -> 14 MB, 2 s).
 - Driver's Claude (rules 6 and 7 of `autopilot-prompt.md`): `duo.py share` after every `go`, `--note N "WRONG ..."`

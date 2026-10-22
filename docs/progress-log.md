@@ -124,3 +124,15 @@ Migratory Birds solve (bootstrap it-2), then strategy, skills and runbook (it-3)
 - No active training. Birds `bestScore` is null and `currentLevel` is 1, so the graded Challenge still looks unused. Not started: it needs Iustin on `bash arena/autopilot.sh --shadow --run birds-duo` at the same time.
 
 **Next:** joint Birds rehearsal (`birds-duo`) once Iustin's shadow is waiting. Friday: `bash arena/autopilot.sh --shadow` (or `--schedule "2026-10-23 15:30" --shadow`).
+
+## 2026-10-22 23:55: iustin: duo mode works with Cursor (gurita uses Cursor + Grok)
+**Done**
+- `duo.py shadow --agent auto|claude|cursor|paste [--model SLUG]`; `autopilot.sh --agent/--model` (driver too, so
+  a Cursor laptop can drive the rehearsal). Cursor CLI: `agent --force [-p --output-format text]`. Paste mode prints a
+  one-line prompt for Cursor's chat and announces each new level. The full prompt goes via
+  `arena/runs/<run>-<sig>/PROMPT.txt` (Windows .cmd wrappers break multi-line arguments).
+- The shadow sets its active run in `arena/.auth/state.json` (`duo.py activate RUN` by hand), so plain
+  `python arena/ccc.py run N` works in any terminal, including PowerShell where `CCC_RUN=... cmd` does not.
+- `.cursor/rules/ccc.mdc` (always on): Cursor follows CLAUDE.md and reads `.claude/skills/*/SKILL.md` as playbooks.
+- Tested with a fake `agent` binary: auto-pick without claude, `--model` passthrough, active run, paste mode
+  announcing level 2 and ALL LEVELS DONE. Not tested: the real Cursor CLI (not installed on the driver Mac).

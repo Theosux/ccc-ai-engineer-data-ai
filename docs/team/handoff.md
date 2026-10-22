@@ -24,6 +24,10 @@ WRONG notes back to you, a 58 MB input via .duo.gz, launcher waiting for level 1
    `bash arena/autopilot.sh --train --run birds-duo` and Iustin runs `bash arena/autopilot.sh --shadow --run birds-duo`.
 3. Friday 15:30: `bash arena/autopilot.sh --shadow` (Mac; `--schedule "2026-10-23 15:30" --shadow` for zero-touch) or
    `python arena/duo.py shadow` (Windows/Linux). Never golive, go, submit or fetch from your laptop.
+4. You use Cursor + Grok: install the Cursor CLI (`curl https://cursor.com/install -fsS | bash`, Windows PowerShell
+   `irm 'https://cursor.com/install?win32=true' | iex`), sign in once with `agent`, pick the Grok slug from
+   `agent models` and add `--model <slug>`. Without the CLI: `--agent paste` and paste the printed line into
+   Cursor's chat in Agent mode (type "continue" if it pauses).
 > 2026-10-22 23:41 · gurita: setup done. macOS 27.0.1 arm64, Python 3.13.7 (`python3`; no `python` on PATH). `login --http` OK as gura. `golive.py --preflight` ALL OK: The Posers 3/3, CREIC Cluj-Napoca, T-16:20, clock +0.05s. Members: iusty64, teosux, gura. Tests ALL OK with ortools 9.14.6206 (LightGBM needed `brew install libomp`). `duo.py status contest`: driver has not shared level 1 yet. Friday: `bash arena/autopilot.sh --shadow`, or `bash arena/autopilot.sh --schedule "2026-10-23 15:30" --shadow`. Birds not started; see the message above.
 
 ### 2026-10-22 16:45 · iustin → gurita · OPEN

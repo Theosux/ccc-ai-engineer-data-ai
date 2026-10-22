@@ -30,6 +30,7 @@
 | [contest-day-runbook.md](strategy/contest-day-runbook.md) | **Contest day**: timeline (Romania time), golive, fallback ladder, rules of the road |
 | [training-plan.md](strategy/training-plan.md) | What to do Mon 19 → Fri 23 Oct |
 | [autopilot-prompt.md](strategy/autopilot-prompt.md) | Prompt that `arena/autopilot.sh` hands to the autonomous contest Claude (lessons from the rehearsals) |
+| [../.cursor/rules/ccc.mdc](../.cursor/rules/ccc.mdc) | Cursor project rule (always on): CLAUDE.md and `.claude/skills/` apply to Cursor agents too |
 | [shadow-prompt.md](strategy/shadow-prompt.md) | Prompt for the second laptop (`arena/duo.py shadow`): same open level, different approach, never submits; handover via `duo.py` (runbook, Duo section) |
 
 ## Problem-solving knowledge (`docs/knowledge/`)

@@ -13,7 +13,7 @@
 set -u
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO" || exit 1
-ARGS=; SCHED=; MODE=contest; HEADLESS=0; RUN=; END="20:00 Romania time (17:00 UTC)"
+ARGS=; SCHED=; AGENT=auto; MODEL=; MODE=contest; HEADLESS=0; RUN=; END="20:00 Romania time (17:00 UTC)"
 LABEL=com.theposers.ccc-autopilot
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 
@@ -23,6 +23,8 @@ while [ $# -gt 0 ]; do
     --shadow) MODE=shadow; ARGS="$ARGS $1" ;;
     --run) RUN="$2"; ARGS="$ARGS $1 $2"; shift ;;
     --headless) HEADLESS=1; ARGS="$ARGS $1" ;;
+    --agent) AGENT="$2"; ARGS="$ARGS $1 $2"; shift ;;   # claude | cursor (Cursor CLI `agent`); default: whichever is installed
+    --model) MODEL="$2"; ARGS="$ARGS $1 $2"; shift ;;
     --unschedule)
       launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null; rm -f "$PLIST"; echo "autopilot schedule removed"; exit 0 ;;
     --schedule) SCHED="$2"; shift ;;   # HH:MM (today) or YYYY-MM-DD HH:MM; keeps the other flags
@@ -53,7 +55,8 @@ fi
 SIG="$(cat .claude/signature.local 2>/dev/null)"
 [ -n "$SIG" ] || { echo "ERROR: write your name into .claude/signature.local (iustin or gurita)"; exit 2; }
 if [ "$MODE" = shadow ]; then
-  exec python3 arena/duo.py shadow --run "${RUN:-contest}" $([ "$HEADLESS" = 1 ] && echo --headless)
+  exec python3 arena/duo.py shadow --run "${RUN:-contest}" --agent "$AGENT" ${MODEL:+--model "$MODEL"} \
+    $([ "$HEADLESS" = 1 ] && echo --headless)
 fi
 
 say_() { command -v say >/dev/null && say "$1" & }
@@ -74,15 +77,23 @@ else
   RUN="${RUN:-contest}"; mkdir -p "arena/runs/$RUN"; LIVE_OUT="arena/runs/$RUN/live-out.txt"
   python3 arena/golive.py --browser 2>&1 | tee "$LIVE_OUT"; STATUS=${PIPESTATUS[0]}   # blocks until live + level 1
 fi
-say_ "Contest is live. Claude is solving."
+say_ "Contest is live. The agent is solving."
 python3 arena/duo.py share "$RUN" || echo "WARN: share failed (the shadow laptop waits for level 1 via git)"
 
 PROMPT="$(sed -e "s#{{MODE}}#$MODE#g" -e "s#{{RUN}}#$RUN#g" -e "s#{{LIVE_OUT}}#$LIVE_OUT#g" \
               -e "s#{{GOLIVE_STATUS}}#$STATUS#g" -e "s#{{END}}#$END#g" -e "s#{{SIG}}#$SIG#g" docs/strategy/autopilot-prompt.md)"
-echo "== handing over to Claude ($(date '+%H:%M:%S')), run $RUN"
+if [ "$AGENT" = auto ]; then command -v claude >/dev/null && AGENT=claude || AGENT=cursor; fi
+if [ "$AGENT" = claude ]; then
+  RUNNER=(claude --dangerously-skip-permissions --model "${MODEL:-opus}"); P=(-p)
+else                               # Cursor CLI (https://cursor.com/cli): --force runs commands without asking
+  EXE="$(command -v agent || command -v cursor-agent)"
+  [ -n "$EXE" ] || { echo "ERROR: neither claude nor the Cursor CLI (agent) is installed: https://cursor.com/cli"; exit 2; }
+  RUNNER=("$EXE" --force ${MODEL:+--model "$MODEL"}); P=(-p --output-format text)
+fi
+echo "== handing over to $AGENT ($(date '+%H:%M:%S')), run $RUN"
 if [ "$HEADLESS" = 1 ]; then
-  claude -p --dangerously-skip-permissions --model opus "$PROMPT" > "arena/runs/$RUN/autopilot.log" 2>&1
-  echo "== Claude finished ($(date '+%H:%M:%S')); log arena/runs/$RUN/autopilot.log"
+  "${RUNNER[0]}" "${P[@]}" "${RUNNER[@]:1}" "$PROMPT" > "arena/runs/$RUN/autopilot.log" 2>&1
+  echo "== $AGENT finished ($(date '+%H:%M:%S')); log arena/runs/$RUN/autopilot.log"
 else
-  claude --dangerously-skip-permissions --model opus "$PROMPT"
+  "${RUNNER[@]}" "$PROMPT"
 fi

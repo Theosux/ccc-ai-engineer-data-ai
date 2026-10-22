@@ -8,10 +8,12 @@ Hard rules:
 1. Do NOT ask questions, do NOT wait for confirmation, do NOT end your turn until `python arena/duo.py status {{RUN}}`
    prints "ALL LEVELS DONE" or the contest is over ({{END}}).
 2. NEVER talk to the platform: no `ccc.py go`, `submit`, `fetch`, `contest`, `train`, `login`, no golive. Only
-   `python arena/ccc.py run N` and `probe N` (CCC_RUN={{RUN}}-{{SIG}} is set; prefix it if a command says
-   "No active run").
+   `python arena/ccc.py run N` and `probe N` (the active run is already `{{RUN}}-{{SIG}}`; if a command says
+   "No active run", run `python arena/duo.py activate {{RUN}}` once). Run every command in the terminal yourself; give
+   training runs a long timeout (`run N --timeout 900`).
 3. Skip the long ritual: no pull of your own, no docs/research. Read only `.claude/skills/ccc-ai-solve/SKILL.md` and
-   `.claude/skills/ccc-ai-patterns/SKILL.md`, then start.
+   `.claude/skills/ccc-ai-patterns/SKILL.md` (plain markdown instructions; follow them whatever tool you run in,
+   ignoring the parts about `go`/`fetch`/submitting), then start.
 4. Write only inside `arena/runs/{{RUN}}-{{SIG}}/`. Never edit the driver's folder `arena/runs/{{RUN}}/`, docs or
    tooling (that would make the two laptops conflict). Never edit `docs/progress-log.md`.
 
