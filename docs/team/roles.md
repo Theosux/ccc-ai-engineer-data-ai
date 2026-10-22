@@ -20,4 +20,5 @@ Verified by `golive.py --preflight` on Teo's account (2026-10-19):
 - Data/AI team **"The Posers"**, **3/3 members**, venue **CREIC Cluj-Napoca** (on-site, same venue as Teo's Classic team).
 - Teo is one of the 3 members but competes in CLASSIC at the same time, so in practice the team is Iustin + Gurita.
 - **2026-10-22: Dobrin was removed from the platform team and replaced by Gurita** (signature `gurita`).
-  *(Confirm the member list on codingcontest.org → My registrations; each person's own `--preflight` shows it.)*
+  Confirmed the same evening from Gurita's own account (`login --http` as **gura**, `golive.py --preflight` ALL OK,
+  team members **iusty64**, **teosux**, **gura**). Platform username is `gura`.

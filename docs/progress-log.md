@@ -110,3 +110,17 @@ Migratory Birds solve (bootstrap it-2), then strategy, skills and runbook (it-3)
   after unpacking), launcher waiting for level 1 and starting Claude with no unfilled placeholders.
 
 **Next:** gurita setup + joint graded rehearsal (handoff message); Friday: driver `--schedule` (installed), gurita `--shadow`.
+
+## 2026-10-22: gurita: shadow laptop setup, login and preflight
+**Done**
+- First session on this Mac (macOS 27.0.1, arm64). Signature `gurita`. Python is `python3` 3.13.7.
+- `pip install -r requirements.txt` (ortools 9.14.6206). Playwright Chromium installed. `brew install libomp` so LightGBM loads.
+- Tests ALL OK: `test_ml.py` 1.9s, `test_lib.py` 6.9s (CP-SAT did not hang), `test_golive.py` 6.0s.
+- `python3 arena/ccc.py login --http` OK as **gura**. `python3 arena/golive.py --preflight` ALL OK: The Posers 3/3, CREIC Cluj-Napoca, contest OPEN_REGISTRATION, T-16:20, clock +0.05s. Team members: iusty64, teosux, gura.
+- `python3 arena/duo.py status contest`: driver has not shared level 1 yet.
+
+**Findings**
+- This account is on the team. Platform username is `gura`.
+- No active training. Birds `bestScore` is null and `currentLevel` is 1, so the graded Challenge still looks unused. Not started: it needs Iustin on `bash arena/autopilot.sh --shadow --run birds-duo` at the same time.
+
+**Next:** joint Birds rehearsal (`birds-duo`) once Iustin's shadow is waiting. Friday: `bash arena/autopilot.sh --shadow` (or `--schedule "2026-10-23 15:30" --shadow`).
