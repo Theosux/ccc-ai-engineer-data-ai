@@ -1,18 +1,74 @@
 {
   "score": {
     "gameScore": {
-      "timeMs": 0,
-      "level": 1
+      "timeMs": 1792703219577,
+      "level": 2
     },
     "state": {
       "level1": {
         "kind": "levels",
+        "passedAt": 1792703219577,
+        "submissions": [
+          {
+            "fileId": "1-a",
+            "submittedAt": 1792703219163,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "2-b",
+            "submittedAt": 1792703219271,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "4-d",
+            "submittedAt": 1792703219363,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "3-c",
+            "submittedAt": 1792703219481,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "5-e",
+            "submittedAt": 1792703219577,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "iusty64"
+          }
+        ],
+        "passedFiles": {
+          "1-a": 1792703219163,
+          "2-b": 1792703219271,
+          "3-c": 1792703219481,
+          "4-d": 1792703219363,
+          "5-e": 1792703219577
+        }
+      },
+      "level2": {
+        "kind": "levels",
         "passedFiles": {
           "1-a": null,
           "2-b": null,
-          "3-c": null,
-          "4-d": null,
-          "5-e": null
+          "3-c": null
         }
       }
     }
