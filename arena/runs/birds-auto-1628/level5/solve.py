@@ -1,52 +1,51 @@
-import sys, pathlib
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-import numpy as np
-from sklearn.ensemble import ExtraTreesClassifier
-from feats import HERE, temps, load, edges, feats
+import sys, io
+import numpy as np, pandas as pd
 
-HEAD = "Flock ID,Species"
-SPECIES = [l.strip() for l in (HERE / "level_4_species.in").read_text(encoding="utf-8").splitlines() if l.strip()]
+HEAD = "Day,Top 50 Arrivals BOPs"
+K = 50
 
 
-def dedup(p):
-    return tuple(x for i, x in enumerate(p) if i == 0 or x != p[i - 1])
+def load(text):
+    d = pd.read_csv(io.StringIO(text), low_memory=False)
+    d.columns = ["day", "bop", "arr", "occ", "wx", "wy", "ins"]
+    d["arr"] = pd.to_numeric(d.arr, errors="coerce")
+    return d
 
 
-def build(d, T):
-    F = feats(d, T, None)
-    E = {f: set().union(*[edges(dedup(p)) for p in g.p]) for f, g in d.groupby("f", sort=False)}
-    palf = set(F.f[F.palq > 0.8])
-    F["blue"] = [len(E[f] & set().union(*[E[h] for h in palf if h != f])) / max(1, len(E[f])) for f in F.f]
-    return F
+def rk(M):
+    return M.argsort(1).argsort(1) / M.shape[1]
 
 
 def main():
-    T = temps()
     d = load(sys.stdin.read())
-    main_d = load((HERE / "in_level-4_1-main.txt").read_text(encoding="utf-8"))
-    Fm = build(main_d, T)
-    tr = Fm[Fm.s != "missing"]
-    Fd = build(d, T) if len(d) != len(main_d) else Fm
-    te = Fd[Fd.s == "missing"]
-    cols = [c for c in tr.columns if c not in ("f", "s")]
-    m = ExtraTreesClassifier(1000, random_state=0, n_jobs=-1).fit(tr[cols].values.astype(float), np.array(tr.s.tolist()))
-    pred = m.predict(te[cols].values.astype(float)) if len(te) else []
+    A = d.pivot(index="day", columns="bop", values="arr")
+    O = d.pivot(index="day", columns="bop", values="occ").values.astype(float)
+    W = d.groupby("day")[["wx", "wy"]].first().values
+    days, bops = A.index.values, A.columns.values
+    A = A.values
+    known = ~np.isnan(A).any(1)
+    past = np.where(known)[0]
+    fut = np.where(~known)[0]
+    Z = A[past]
+    Z = (Z - Z.mean(1, keepdims=True)) / Z.std(1, keepdims=True)
     print(HEAD)
-    for f, p in zip(te.f, pred):
-        print(f"{f},{p}")
-    from collections import Counter
-    print(Counter(pred), file=sys.stderr)
+    for t in fut:
+        # mirrored wind kNN (best real score in rehearsal) blended with same-day occupancy ranking
+        dist = np.linalg.norm(W[past] + W[t], axis=1)
+        mir = Z[np.argsort(dist)[:10]].mean(0)
+        s = rk(O[t:t + 1])[0] + rk(mir[None])[0]
+        top = bops[np.argsort(-s, kind="stable")[:K]]
+        print(f"{days[t]}," + " ".join(str(b) for b in top))
 
 
 def check(data, out):
-    d = load(data)
-    want = [str(f) for f in d[d.s == "missing"].f.drop_duplicates()]
     lines = out.strip().splitlines()
     if lines[0] != HEAD:
         return False, "header"
     rows = [l.split(",") for l in lines[1:]]
-    ok = [r[0] for r in rows] == want and all(r[1] in SPECIES for r in rows)
-    return ok, f"{len(rows)} rows vs {len(want)}"
+    days = [int(r[0]) for r in rows]
+    ok = days == list(range(731, 761)) and all(len(set(r[1].split())) == K for r in rows)
+    return ok, f"{len(rows)} days"
 
 
 if __name__ == "__main__":
