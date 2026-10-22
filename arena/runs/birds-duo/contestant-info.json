@@ -1,8 +1,8 @@
 {
   "score": {
     "gameScore": {
-      "timeMs": 1792703219577,
-      "level": 2
+      "timeMs": 1792703280694,
+      "level": 3
     },
     "state": {
       "level1": {
@@ -64,6 +64,44 @@
         }
       },
       "level2": {
+        "kind": "levels",
+        "passedAt": 1792703280694,
+        "submissions": [
+          {
+            "fileId": "3-c",
+            "submittedAt": 1792703280498,
+            "result": {
+              "correct": true,
+              "error": "RMSE = 2.6990 (limit 3.00)."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "1-a",
+            "submittedAt": 1792703280593,
+            "result": {
+              "correct": true,
+              "error": "RMSE = 2.5606 (limit 6.00)."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "2-b",
+            "submittedAt": 1792703280694,
+            "result": {
+              "correct": true,
+              "error": "RMSE = 2.5543 (limit 3.00)."
+            },
+            "submittedBy": "iusty64"
+          }
+        ],
+        "passedFiles": {
+          "1-a": 1792703280593,
+          "2-b": 1792703280694,
+          "3-c": 1792703280498
+        }
+      },
+      "level3": {
         "kind": "levels",
         "passedFiles": {
           "1-a": null,
