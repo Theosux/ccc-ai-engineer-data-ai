@@ -78,3 +78,16 @@ because the next level outranks any score. Bank the pass first, improve only if 
 - [ ] trap checklist done            - [ ] output format = example (header, order, decimals)
 - [ ] CV ≥ threshold with margin      - [ ] stdout = answer only (diagnostics on stderr)
 - [ ] `check()` passes on every file
+
+## 9. Lessons from Iustin's cold Birds rehearsal (2026-10-22, 6/6 in 14:04) *(iustin)*
+- **Clean only what the statement asks for.** L1 shipped a 70..113 cluster that looks like °F; the grader wanted the
+  raw values (the °F fix is requested only from L2 on). Cost: 1 WRONG.
+- **A WRONG verdict is an oracle.** It reports the score (`1062/2171 positions correct`). Score each alternative
+  interpretation against your own output: the one that reproduces the reported number is what the grader wants.
+- **Forecast levels can hide a regime change.** L5: a ratio model scored 0.747 on 11 rolling-origin cuts and 0.32 on
+  the real window. The hidden days 731-760 were already the "WeatherChanger" period that L6's story reveals.
+  When the real score is far below CV, stop tuning and probe 2-3 structurally different models against the grader.
+  Real L5 scores (truth revealed in L6's data): future occupancy 0.528, persistence 0.562, wind-kNN 0.550,
+  wind-kNN with the wind sign flipped 0.605, ratio14 0.322.
+- **macOS:** `ortools` 9.15 deadlocks with >1 CP-SAT worker (pinned 9.14 in requirements); Edge is missing, so the
+  browser tools fall back to Chrome (`ccc.launch_browser`).

@@ -29,6 +29,7 @@
 | [workflow.md](strategy/workflow.md) | The loop per level, contest roles, second-opinion handover |
 | [contest-day-runbook.md](strategy/contest-day-runbook.md) | **Contest day**: timeline (Romania time), golive, fallback ladder, rules of the road |
 | [training-plan.md](strategy/training-plan.md) | What to do Mon 19 → Fri 23 Oct |
+| [autopilot-prompt.md](strategy/autopilot-prompt.md) | Prompt that `arena/autopilot.sh` hands to the autonomous contest Claude (lessons from the rehearsals) |
 
 ## Problem-solving knowledge (`docs/knowledge/`)
 | File | Purpose |

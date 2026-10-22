@@ -71,3 +71,27 @@ Migratory Birds solve (bootstrap it-2), then strategy, skills and runbook (it-3)
 
 **Next:** rerun the autopilot on a fresh training contest to get real verdicts (especially L5), then the
 `--preflight` check before Friday.
+
+## 2026-10-22: iustin: cold Birds rehearsal 6/6 in 14:04, contest autopilot built and dress-rehearsed
+**Done**
+- Setup on the driver's Mac: requirements, tests ALL OK, `login --http`, `golive.py --preflight` ALL OK
+  (The Posers 3/3, CREIC). Fixes: ortools 9.14 pin on macOS (9.15 CP-SAT deadlock), Edge->Chrome browser fallback.
+- Roles: driver = iustin; Dobrin left, Gurita replaces him (second opinion).
+- **Cold Challenge rehearsal, run `birds-iustin`: 6/6 in 14:04** (16:09:53 to 16:23:57). The 2025 winner took
+  85 min; Teo's spoiler run took 16.1 min. Per level: L1 ~1.5 min (1 WRONG: converted °F the grader wanted raw),
+  L2 ~1 min (linear, RMSE 2.55-2.70), L3 ~1 min (story rules, first try), L4 ~1 min (ExtraTrees, F1 0.9755),
+  L5 ~7.5 min (ratio14 0.32 WRONG despite 0.747 CV; future occupancy 0.528 PASS), L6 ~1.5 min (mirror, 1.0).
+- **Autopilot** (`arena/autopilot.sh`, prompt `docs/strategy/autopilot-prompt.md`): caffeinate, login, golive until
+  level 1, then an autonomous Opus session. `--schedule HH:MM` (launchd opens Terminal by itself; tested).
+- **Hands-off dress rehearsal `birds-auto-1628`: launch to ALL LEVELS DONE in 6.5 min, zero human input.** The
+  platform reused the finished Challenge, so nothing was submitted; graded offline instead: L1, L2, L3, L6 outputs
+  byte-identical to accepted ones, L4 agrees on 70/72 flocks with the accepted 0.9755 answer, L5 scores 0.513 against
+  the true arrivals revealed in L6's data (bar 0.50). Caveat: its prompt carried the Birds lessons, so 6.5 min is
+  optimistic for an unseen game.
+
+**Findings**
+- One Challenge per game per account: `train --mode challenge` returns the same contest once it is done.
+- L5 post-mortem against the truth: wind-kNN with the wind sign flipped 0.605 > persistence 0.562 > wind-kNN 0.550 >
+  occupancy 0.528 > ratio14 0.322. Lessons in `docs/knowledge/ml-playbook.md` section 9.
+
+**Next:** Fri: `bash arena/autopilot.sh --schedule 15:30` at the venue after Wi-Fi + `--preflight`.

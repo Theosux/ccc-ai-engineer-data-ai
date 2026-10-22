@@ -51,6 +51,8 @@ python3 arena/ccc.py login --http || echo "WARN: HTTP login failed; golive retri
 if [ "$MODE" = train ]; then
   RUN="birds-auto-$(date +%H%M)"; END="240 minutes after now ($(date -v+4H '+%H:%M'))"
   python3 arena/ccc.py train ccc-2025.11-ai-birds --mode challenge --name "$RUN" || exit 1
+  python3 arena/ccc.py info | grep -q "level1: PASSED" && \
+    echo "WARN: this account's Birds Challenge is already finished; go will skip every submit (nothing graded)"
   LIVE_OUT="arena/runs/$RUN/live-out.txt"
   python3 arena/ccc.py fetch 1 2>&1 | tee "$LIVE_OUT"; STATUS=${PIPESTATUS[0]}
 else
