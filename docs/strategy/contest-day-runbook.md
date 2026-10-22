@@ -15,6 +15,20 @@ never asks, commits after each level, and follows the fallback ladder on its own
 - The Claude window stays interactive: watch it; type only if it is clearly stuck or the platform needs a click.
 - Rehearsal: `bash arena/autopilot.sh --train [--headless]` = fresh Birds Challenge run through the same hand-off.
 
+## Duo: second laptop in shadow mode (since 2026-10-22, gurita)
+Levels unlock one at a time, so the second laptop does not take levels: it solves the **same open level** with a
+deliberately different approach and hands the solver over, so the driver has a second candidate ready when its own
+model fails (Birds L5: the first model scored 0.32, three probes followed).
+- Gurita: `bash arena/autopilot.sh --shadow` (macOS, `--schedule 15:30` works too) or `python arena/duo.py shadow`
+  (any OS). It waits until the driver shares level 1 through git, then runs Claude with
+  `docs/strategy/shadow-prompt.md`. **It never talks to the platform**: no golive, fetch, go or submit.
+- Transport is git on `main`, each laptop only in its own folder (`arena/runs/contest/` vs `arena/runs/contest-gurita/`),
+  so rebases never conflict. Inputs > 45 MB travel as `.duo.gz` (Birds L5: 58 MB -> 14 MB, 2 s).
+- Driver's Claude (rules 6 and 7 of `autopilot-prompt.md`): `duo.py share` after every `go`, `--note N "WRONG ..."`
+  after a WRONG verdict, `duo.py take contest N` after a WRONG or 10 min on a level, then
+  `go N --solver solve_gurita.py`; `share --done` at the end.
+- Gurita's Claude: `duo.py status contest` (open level, driver's solver and notes), solve, `duo.py publish contest N "<CV>, <approach>"`.
+
 ## Timeline (Romania time)
 | When | Who | Action |
 |---|---|---|
@@ -22,11 +36,11 @@ never asks, commits after each level, and follows the fallback ladder on its own
 | Fri 11:00 | driver (optional) | `python arena/golive.py --observe school --minutes 15` in the background records the real #school go-live (08:00 UTC) as a dress rehearsal of the detectors. |
 | 15:00 (T-60) | both | At the venue: Wi-Fi, `git pull`, `python arena/golive.py --preflight`. |
 | 15:30 (T-30) | driver | **Autopilot:** started by `--schedule 15:30` or by hand (`bash arena/autopilot.sh`); the rows below are the manual fallback. Open Claude Code in the repo. Model **Opus** (`/model opus`; optional `/fast` **now**, before the first message, if usage credits are on). First message: `signature: <driver>` + *"We are working on ccc data/ai check claude.md for context"*, then *"contest is about to start"*. |
-| 15:30 | helper | Same on the second laptop with their own signature; skills loaded; ready to read PDFs. |
+| 15:30 | helper | **Shadow:** `bash arena/autopilot.sh --shadow` (or `python arena/duo.py shadow`) on the second laptop, signature file = own name. It waits for the driver's level 1 via git. Never golive/go/submit from this laptop. |
 | **15:45 (T-15)** | driver's Claude | Start `python arena/golive.py --browser` with `run_in_background`. It watches the contest (API poll, SSE, registration, level-1 probe, Edge window), registers run `contest` and prints the level 1 statement when live. |
 | 16:00 (T0) | auto | golive fires (beep, toast, `LIVE.txt`, level 1 printed). Claude solves immediately. Check `arena/runs/contest/game-info.json` for `optimization` / `passScore`. |
 | During | driver | `ccc-ai-solve` loop. Commit after each level in the background. |
-| Stuck > 15 min | both | `docs/knowledge/ml-playbook.md` §5, then the second-opinion handover (`workflow.md`). |
+| Stuck > 10 min | both | Driver: `python arena/duo.py take contest N` (shadow's solver), `docs/knowledge/ml-playbook.md` §5. |
 | 19:30 (T-30) | both | Endgame: submit anything that passes `check()` and clears the local CV threshold. Ranking is level, then time. |
 | 20:00 | | End. `git add -A && git commit && git push`, signed progress-log entry. |
 

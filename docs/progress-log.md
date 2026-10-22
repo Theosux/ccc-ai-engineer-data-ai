@@ -21,7 +21,7 @@ Migratory Birds solve (bootstrap it-2), then strategy, skills and runbook (it-3)
   - tests in `lib/tests/test_ml.py`.
 - **Migratory Birds 6/6 in 16.1 min** (fetch→pass), run `arena/runs/SPOILER-birds/`. Per level:
   - L1: 79 s, 2 WRONG (a spelled-out "seventeen"; a pandas-3 dtype bug).
-  - L2: 113 s, linear regression, RMSE 2.55–2.70.
+  - L2: 113 s, linear regression, RMSE 2.55-2.70.
   - L3: 66 s, story rules.
   - L4: 115 s, ExtraTrees on flock features, F1 0.9885.
   - L5: 8 min, LightGBM + wind-kNN rank ensemble, top-50 accuracy 0.5687 against the 0.50 bar.
@@ -95,3 +95,18 @@ Migratory Birds solve (bootstrap it-2), then strategy, skills and runbook (it-3)
   occupancy 0.528 > ratio14 0.322. Lessons in `docs/knowledge/ml-playbook.md` section 9.
 
 **Next:** Fri: `bash arena/autopilot.sh --schedule 15:30` at the venue after Wi-Fi + `--preflight`.
+
+## 2026-10-22 23:05: iustin: duo mode, both laptops solve in parallel
+**Done**
+- `arena/duo.py` + `docs/strategy/shadow-prompt.md`: the second laptop (gurita) runs `autopilot.sh --shadow` or
+  `duo.py shadow`, waits for the driver's level 1 via git, and an autonomous Claude solves the same open level with a
+  deliberately different approach, publishing `arena/runs/<run>-gurita/levelN/solve.py` + NOTE.md. It never talks
+  to the platform. The driver shares after every `go`, posts WRONG verdicts as notes, and after a WRONG or 10 min on a
+  level runs `duo.py take` + `go N --solver solve_gurita.py` (rules 6 and 7 in `autopilot-prompt.md`).
+- `autopilot.sh`: signature from `.claude/signature.local` (prompt no longer hard-wired to iustin), `--run NAME`,
+  `--shadow`, `--schedule` keeps the other flags. Friday's installed job is unchanged (contest mode).
+- Tested on two local clones with a bare remote (no test commits on GitHub): share level 1 (0.2 s), shadow mirror +
+  `run` ALL OK, publish, driver note, `take` + `run --solver` ALL OK, a 58 MB input as a 14 MB .duo.gz (2 s, identical
+  after unpacking), launcher waiting for level 1 and starting Claude with no unfilled placeholders.
+
+**Next:** gurita setup + joint graded rehearsal (handoff message); Friday: driver `--schedule` (installed), gurita `--shadow`.

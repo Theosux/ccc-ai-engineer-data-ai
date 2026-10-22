@@ -11,7 +11,7 @@
 ## Contest facts (`docs/contest/`)
 | File | Purpose |
 |---|---|
-| [overview.md](contest/overview.md) | 42nd DATA/AI CCC: date, team, size, track history 2021–2025 with winner times |
+| [overview.md](contest/overview.md) | 42nd DATA/AI CCC: date, team, size, track history 2021 to 2025 with winner times |
 | [format-and-scoring.md](contest/format-and-scoring.md) | Levels, files, metrics/thresholds, score shown in the verdict, ranking, penalties |
 | [rules-and-ai-policy.md](contest/rules-and-ai-policy.md) | Official rules; no AI/LLM restriction |
 | [platform.md](contest/platform.md) | codingcontest.org mechanics + game API (shared with Classic), Data/AI specifics |
@@ -19,7 +19,7 @@
 ## Research (`docs/research/`)
 | File | Purpose |
 |---|---|
-| [agent-A-contest-facts.md](research/agent-A-contest-facts.md) | Raw report: Data/AI editions 2021–2025, format, ranking, rules, leaderboards, participant repos (§5b Birds spoiler) |
+| [agent-A-contest-facts.md](research/agent-A-contest-facts.md) | Raw report: Data/AI editions 2021 to 2025, format, ranking, rules, leaderboards, participant repos (§5b Birds spoiler) |
 | [agent-B-problems-strategy.md](research/agent-B-problems-strategy.md) | Raw report: past problems, typical progression, fast-baseline playbook, team workflow, environment (§1.1 Birds spoiler) |
 | [verification-report.md](research/verification-report.md) | Cross-check of 34 key claims (22 ✅ / 7 ⚠️ / 5 ❌) + corrections |
 
@@ -30,6 +30,7 @@
 | [contest-day-runbook.md](strategy/contest-day-runbook.md) | **Contest day**: timeline (Romania time), golive, fallback ladder, rules of the road |
 | [training-plan.md](strategy/training-plan.md) | What to do Mon 19 → Fri 23 Oct |
 | [autopilot-prompt.md](strategy/autopilot-prompt.md) | Prompt that `arena/autopilot.sh` hands to the autonomous contest Claude (lessons from the rehearsals) |
+| [shadow-prompt.md](strategy/shadow-prompt.md) | Prompt for the second laptop (`arena/duo.py shadow`): same open level, different approach, never submits; handover via `duo.py` (runbook, Duo section) |
 
 ## Problem-solving knowledge (`docs/knowledge/`)
 | File | Purpose |

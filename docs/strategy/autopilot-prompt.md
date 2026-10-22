@@ -1,4 +1,4 @@
-signature: iustin. We are working on ccc data/ai, check CLAUDE.md for context.
+signature: {{SIG}}. We are working on ccc data/ai, check CLAUDE.md for context.
 
 AUTOPILOT MODE ({{MODE}}). You are the autonomous contest driver. The contest run `{{RUN}}` is LIVE and level 1 is
 already fetched (go-live output: `{{LIVE_OUT}}`, go-live exit status {{GOLIVE_STATUS}}). Nobody is at the keyboard.
@@ -17,9 +17,19 @@ Hard rules for this session:
    (`python arena/ccc.py login --http`, `python arena/golive.py --no-preflight`, `python arena/ccc.py contest`,
    `fetch 1`) until level 1 is on disk, then continue with rule 3.
 5. Only this laptop submits. Never run two `go`/`submit` at the same time. Never pipe `go` into tail/grep.
-6. After each PASSED level, commit in the background:
-   `find arena/runs/{{RUN}} -size +50M | sed 's#^#/#' >> .git/info/exclude; git add arena/runs/{{RUN}} && git commit -qm "[iustin] {{RUN}} level N passed" -m "Signed-off-by: iustin" && git push -q`
-   (never force-push; a failed push is not a reason to stop).
+6. The teammate's laptop runs in SHADOW mode: it solves the same open level in parallel and never submits. It only
+   sees what you share through git, so share early (each call takes a few seconds; never force-push; a failed push
+   is not a reason to stop):
+   - right after every `go N` (passed or not) and after any manual `fetch`: `python arena/duo.py share {{RUN}}`
+     (commits the run folder: new level, your solve.py; inputs > 45 MB go as .duo.gz automatically);
+   - after a WRONG verdict, tell the teammate what failed:
+     `python arena/duo.py share {{RUN}} --note N "WRONG <score> (bar <bar>) with <approach>"`;
+   - when `go` prints "ALL LEVELS DONE": `python arena/duo.py share {{RUN}} --done` (stops the shadow).
+7. Use the teammate: after a WRONG verdict, and whenever a level has been open for 10 minutes, run
+   `python arena/duo.py take {{RUN}} N`. It copies the teammate's solver to `levelN/solve_<name>.py` and prints its
+   note (approach + CV). If its CV beats yours or it is a different interpretation of a rule you got WRONG on,
+   `python arena/ccc.py go N --solver solve_<name>.py` (counts as one of your probes). No teammate solver yet:
+   continue on your own and check again after your next attempt.
 
 Lessons from the Birds rehearsals (14 min and 16 min for 6/6; the 2025 winner needed 85 min):
 - Clean only what the statement asks for. Birds L1 planted a 70..113 cluster that looked like °F, but the grader

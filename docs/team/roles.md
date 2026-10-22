@@ -3,7 +3,7 @@
 | Role | Who | Notes |
 |---|---|---|
 | **Contest driver** | **iustin** | Runs `golive`, `go`, `submit` on contest day. Only this laptop submits. Decided by Iustin 2026-10-21. |
-| Second opinion | **gurita** (replaced Dobrin on 2026-10-22) | Builds alternative solvers for the hardest open level with `run`/`probe` only, hands over via branch |
+| Second opinion | **gurita** (replaced Dobrin on 2026-10-22) | Shadow mode (`autopilot.sh --shadow` / `duo.py shadow`): solves the driver's open level with a different approach, `run`/`probe` only, hands over via `duo.py publish` (own run folder on main) |
 | Third member | TBD | The Data/AI registration allows 3. Teo competes in CLASSIC, so he is not available during the contest |
 
 ## Ownership (to avoid merge conflicts)
