@@ -1,8 +1,8 @@
 {
   "score": {
     "gameScore": {
-      "timeMs": 1792703504051,
-      "level": 6
+      "timeMs": 1792703552995,
+      "level": 7
     },
     "state": {
       "level1": {
@@ -177,8 +177,20 @@
       },
       "level6": {
         "kind": "levels",
+        "passedAt": 1792703552995,
+        "submissions": [
+          {
+            "fileId": "1-main",
+            "submittedAt": 1792703552995,
+            "result": {
+              "correct": true,
+              "error": "Top-50 accuracy = 1.0000 (threshold 1.00)."
+            },
+            "submittedBy": "iusty64"
+          }
+        ],
         "passedFiles": {
-          "1-main": null
+          "1-main": 1792703552995
         }
       }
     }
