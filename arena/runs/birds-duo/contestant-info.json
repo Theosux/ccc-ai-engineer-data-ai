@@ -1,8 +1,8 @@
 {
   "score": {
     "gameScore": {
-      "timeMs": 1792703346405,
-      "level": 4
+      "timeMs": 1792703403262,
+      "level": 5
     },
     "state": {
       "level1": {
@@ -140,6 +140,24 @@
         }
       },
       "level4": {
+        "kind": "levels",
+        "passedAt": 1792703403262,
+        "submissions": [
+          {
+            "fileId": "1-main",
+            "submittedAt": 1792703403262,
+            "result": {
+              "correct": true,
+              "error": "macro-F1 = 1.0000 (threshold 0.90)."
+            },
+            "submittedBy": "iusty64"
+          }
+        ],
+        "passedFiles": {
+          "1-main": 1792703403262
+        }
+      },
+      "level5": {
         "kind": "levels",
         "passedFiles": {
           "1-main": null
