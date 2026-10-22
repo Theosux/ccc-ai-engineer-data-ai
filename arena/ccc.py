@@ -242,6 +242,19 @@ def passed_files(score, n):
 
 
 # ---------------------------------------------------------------- auth
+def launch_browser(p, profile):
+    """Persistent headed context on the first installed channel: Edge, else Chrome (macOS has no Edge by default),
+    else playwright's own Chromium. Override with CCC_BROWSER=chrome (comma list)."""
+    err = None
+    for ch in (os.environ.get("CCC_BROWSER") or "msedge,chrome,chromium").split(","):
+        try:
+            kw = {} if ch == "chromium" else {"channel": ch}
+            return p.chromium.launch_persistent_context(str(AUTH / profile), headless=False, viewport=None, **kw)
+        except Exception as e:
+            err = e
+    raise err
+
+
 def cmd_login(a):
     if a.http:
         return http_login()
@@ -249,10 +262,10 @@ def cmd_login(a):
 
     AUTH.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as p:
-        ctx = p.chromium.launch_persistent_context(str(AUTH / "edge-profile"), channel="msedge", headless=False, viewport=None)
+        ctx = launch_browser(p, "edge-profile")
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
         page.goto(BASE + "/login")
-        print("Log in in the Edge window (waiting up to 5 min)...")
+        print("Log in in the browser window (waiting up to 5 min)...")
         deadline, user = time.time() + 300, None
         while time.time() < deadline:
             r = ctx.request.get(BASE + "/api/auth/current-user")

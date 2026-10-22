@@ -367,8 +367,7 @@ class Watcher:
             return
         try:
             with sync_playwright() as p:
-                ctx = p.chromium.launch_persistent_context(str(ccc.AUTH / "edge-profile-golive"), channel="msedge",
-                                                           headless=False, viewport=None)
+                ctx = ccc.launch_browser(p, "edge-profile-golive")
                 ctx.add_cookies([{"name": c["name"], "value": c["value"], "domain": c.get("domain") or "codingcontest.org",
                                   "path": c.get("path", "/")} for c in ccc.load_json(ccc.COOKIES, [])])
                 page = ctx.pages[0] if ctx.pages else ctx.new_page()
