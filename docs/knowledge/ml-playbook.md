@@ -30,7 +30,7 @@ Exact metric (100%, "exact", a password) or a weird story twist → look for str
   Always include a linear model: on generated data it often wins (Birds L2 Ridge 2.58 vs LightGBM 2.92).
 - Re-implement the PDF metric exactly (macro vs weighted F1, per-day average, RMSE not MSE).
 - **Time series / forecasting:** never random CV. Use rolling origins: cut at several days (e.g. T−90, T−60,
-  T−30) and forecast the same horizon the task asks for. Birds L5 scores at different cuts ranged 0.42–0.70.
+  T−30) and forecast the same horizon the task asks for. Birds L5 scores at different cuts ranged 0.42 to 0.70.
 - **Margin:** submit when CV clears the threshold with room (RMSE ≤ 0.9× limit, F1 ≥ limit + 0.02). If not, go to §5.
 
 ## 4. Submit and read the score
@@ -49,14 +49,16 @@ Exact metric (100%, "exact", a password) or a weird story twist → look for str
    the floor. If the threshold is below it, there is a hidden formula/feature, so don't tune.
 3. Better **features** from the story and the structure (group aggregates, relations between entities, the
    previous level's data). Birds L4 went from rules to 0.98 with ~15 hand features.
-4. **Model sweep and blend**: ExtraTrees / LightGBM / linear; rank-average or mean of the top 2–3; seed-average.
+4. **Model sweep and blend**: ExtraTrees / LightGBM / linear; rank-average or mean of the top 2 to 3; seed-average.
 5. Classification constraints: class weights for imbalance; tune probability thresholds on out-of-fold predictions.
 6. Time-box 15 min, then the second-opinion teammate attacks it with a different formulation (runbook).
 
 ## 6. Heavy data and images
 - **Large CSVs** (Birds L5: 60 MB, 1.9 M rows): pandas `read_csv(low_memory=False)` loads in ~2 s; pivot to
   day × entity matrices and use numpy. No Python loops over rows. Cache with `df.to_pickle` for experiments.
-- Training sets of millions of rows: LightGBM `n_jobs=-1` is fine (3 M rows × 16 features ≈ 30–60 s).
+- LightGBM threads: never `n_jobs=-1` on the M4 Pro, it is the slowest setting at every size (2k rows 15.1 s vs
+  0.2 s single-threaded, 200k rows 20.5 s vs 9.5 s with 4 threads, identical scores). Use `lib.ml.lgbm_params(n)`:
+  1 thread under 100k rows, 4 above *(iustin, 2026-10-23)*. Millions of rows: measure 4 vs 8 threads on a sample.
 - **Images** (2021, autumn 2023): pretrained torchvision ResNet/EfficientNet embeddings → LogisticRegression;
   fine-tune only if needed. Pre-download weights before the contest (venue Wi-Fi). CPU embedding of 10k small
   images takes minutes. A CUDA torch build needs testing beforehand, never install it mid-contest.

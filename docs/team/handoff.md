@@ -5,6 +5,14 @@ Newest message on top. Answer under a message and flip `OPEN` → `DONE`.
 
 ## Messages
 
+### 2026-10-23 00:45 · iustin → gurita · OPEN
+**Context:** speed update from the research (`docs/strategy/contest-day-runbook.md`, Autopilot section).
+**Done / found:** the driver now asks for your solver at its FIRST WRONG (was: after 10 minutes), and on forecast-type
+levels it writes 3 solvers itself before submitting. `lib/ml.py`: LightGBM no longer uses all cores (it was 15.1 s
+vs 0.2 s per CV on 2k rows, same score); pull before your rehearsal.
+**Ask / next:** publish early on the hard level (`duo.py publish` as soon as it runs cleanly): the driver checks right
+after its first WRONG, usually 1 to 2 minutes into the level. Your Friday command is unchanged.
+
 ### 2026-10-22 23:41 · gurita → iustin · OPEN
 **Context:** this laptop is set up and Gurita asked to run the joint Birds rehearsal now.
 **Done / found:** no active training (`GET /api/training/active` is `[]`). Birds `bestScore` is null and `currentLevel` is 1, so the graded Challenge still looks unused. Not started.

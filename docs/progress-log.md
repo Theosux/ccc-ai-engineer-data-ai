@@ -174,3 +174,21 @@ Birds duo only if Iustin's shadow is up during this window.
 - Shadow teammate solver was not needed (no WRONG verdict, no level open 10 min).
 
 **Next:** Friday contest with the same loop; nothing broken found.
+
+## 2026-10-23 00:45: iustin: speed update from the 4-agent research
+**Done**
+- Research (3 researchers + 1 adversarial verifier): keep Opus at HIGH effort (every 6/6 rehearsal ran at high via
+  `~/.claude/settings.json`; low saves < 1 min/game of thinking and cuts checks on the hard level); fast mode is the
+  only quality-neutral speed lever; extra agents only help as diverse solvers on the hard level.
+- `autopilot.sh`: `--effort high --strict-mcp-config` pinned; fast-mode probe before go-live reads `usage.speed`
+  (today: `fast_mode_state=on`, `speed=standard` = usage credits off -> warning, setting kept); error/hang fallback
+  tested; `--dry-run`; the two solve skills inlined into the prompt (no first read, no `echo =====` zsh error).
+- `autopilot-prompt.md`: rule 8 hard-level protocol (3 solvers on a time-ordered holdout before the first submit,
+  next-best at once on WRONG), rule 7 teammate at the first WRONG, rule 9 pace.
+- `lib/ml.py` `lgbm_params(n)`: LightGBM `n_jobs=-1` was the slowest setting at every size on the M4 Pro, same scores
+  (5-fold, 600 trees: 2k rows 15.1 s vs 0.2 s with 1 thread; 10k 16.1 vs 2.4; 50k 17.5 vs 5.3; 200k 20.5 vs 9.5 with
+  4 threads). Now 1 thread < 100k rows, 4 above; < 10k rows 200 trees at lr 0.1 (Birds L2 RMSE 2.877 vs 2.916).
+  `best_model` on Birds L2: about 17 s -> 1.8 s, still picks ridge 2.583. Tests ALL OK.
+
+**Next:** after ~04:06 (the current Birds Challenge expires): usage credits on, `bash arena/autopilot.sh --train
+--run birds-speed`, compare `timing.jsonl` with the cold run (L1 47.6, L2 85.4, L3 43.4, L4 60.0, L5 308.9, L6 119.8 s).

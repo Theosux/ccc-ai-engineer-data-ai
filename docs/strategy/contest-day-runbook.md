@@ -14,6 +14,14 @@ never asks, commits after each level, and follows the fallback ladder on its own
   15:30 and starts the line above). Undo: `--unschedule`. Lid open, charger in, Wi-Fi joined.
 - The Claude window stays interactive: watch it; type only if it is clearly stuck or the platform needs a click.
 - Rehearsal: `bash arena/autopilot.sh --train [--headless]` = fresh Birds Challenge run through the same hand-off.
+- Agent command (since 2026-10-23, from the speed research): `claude --model opus --effort high --strict-mcp-config`
+  plus fast mode. Before go-live a 3 s probe checks fast mode: `usage.speed=fast` -> on; `fast_mode_state=on` but
+  `speed=standard` -> warning "turn on usage credits" (setting kept, it falls back by itself); error or 90 s hang ->
+  normal speed. `CCC_FAST=0` skips it. **Turn usage credits on in claude.ai before 15:30** for the speed-up.
+- Check without touching the platform: `bash arena/autopilot.sh --dry-run` (probe + prompt build, prints the command).
+- Prompt rules added: the two solve skills are inlined; hard-level protocol (forecast-type level: `solve.py` +
+  `solve_alt1.py` + `solve_alt2.py` scored on a time-ordered holdout before the first submit, next-best at once on
+  WRONG); teammate's solver at the first WRONG; pace rules (no sleep/poll, no `=word` in zsh).
 
 ## Duo: second laptop in shadow mode (since 2026-10-22, gurita)
 Levels unlock one at a time, so the second laptop does not take levels: it solves the **same open level** with a
@@ -45,7 +53,7 @@ model fails (Birds L5: the first model scored 0.32, three probes followed).
 | **15:45 (T-15)** | driver's Claude | Start `python arena/golive.py --browser` with `run_in_background`. It watches the contest (API poll, SSE, registration, level-1 probe, Edge window), registers run `contest` and prints the level 1 statement when live. |
 | 16:00 (T0) | auto | golive fires (beep, toast, `LIVE.txt`, level 1 printed). Claude solves immediately. Check `arena/runs/contest/game-info.json` for `optimization` / `passScore`. |
 | During | driver | `ccc-ai-solve` loop. Commit after each level in the background. |
-| Stuck > 10 min | both | Driver: `python arena/duo.py take contest N` (shadow's solver), `docs/knowledge/ml-playbook.md` §5. |
+| First WRONG | both | Driver: next-best of `solve_alt1/2.py`, then `python arena/duo.py take contest N` (shadow's solver), `docs/knowledge/ml-playbook.md` §5. |
 | 19:30 (T-30) | both | Endgame: submit anything that passes `check()` and clears the local CV threshold. Ranking is level, then time. |
 | 20:00 | | End. `git add -A && git commit && git push`, signed progress-log entry. |
 

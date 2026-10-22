@@ -129,25 +129,36 @@ def score(y, p, metric="acc"):
 
 
 # ---------------------------------------------------------------- models
-def quick_models(task, seed=SEED):
-    """Fast, strong baselines. task: 'clf' or 'reg'. Returns {name: unfitted estimator}."""
+def lgbm_params(n=None):
+    """LightGBM speed settings. n_jobs=-1 is the slowest choice on the M4 Pro at every size (5-fold CV, 600 trees:
+    2k rows 15.1 s vs 0.2 s single-threaded; 50k 17.5 s vs 5.3 s; 200k 20.5 s vs 9.5 s with 4 threads), identical
+    scores. Under 10k rows 200 trees at lr 0.1 match or beat 600 at 0.05 (Birds L2 RMSE 2.877 vs 2.916)."""
+    small = n is not None and n < 10_000
+    return dict(n_estimators=200 if small else None, learning_rate=0.1 if small else None,
+                n_jobs=1 if n is not None and n < 100_000 else 4)
+
+
+def quick_models(task, seed=SEED, n=None):
+    """Fast, strong baselines. task: 'clf' or 'reg'; n = training rows (tunes LightGBM speed). {name: estimator}."""
     from sklearn.ensemble import ExtraTreesClassifier, ExtraTreesRegressor, RandomForestClassifier, RandomForestRegressor
     from sklearn.linear_model import LogisticRegression, Ridge
     from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
     from sklearn.pipeline import make_pipeline
     from sklearn.preprocessing import StandardScaler
     import lightgbm as lgb
-    q = dict(random_state=seed, n_jobs=-1)
+    q = dict(random_state=seed, n_jobs=-1)  # sklearn forests: all cores is fastest (RF 0.9 s vs 1.3 s with 4)
+    lp = lgbm_params(n)
+    lq = dict(random_state=seed, n_jobs=lp["n_jobs"], verbose=-1)
     if task == "clf":
         return {
-            "lgbm": lgb.LGBMClassifier(n_estimators=400, learning_rate=0.05, verbose=-1, **q),
+            "lgbm": lgb.LGBMClassifier(n_estimators=lp["n_estimators"] or 400, learning_rate=lp["learning_rate"] or 0.05, **lq),
             "rf": RandomForestClassifier(n_estimators=400, **q),
             "et": ExtraTreesClassifier(n_estimators=400, **q),
             "logreg": make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)),
             "knn": make_pipeline(StandardScaler(), KNeighborsClassifier(7)),
         }
     return {
-        "lgbm": lgb.LGBMRegressor(n_estimators=600, learning_rate=0.05, verbose=-1, **q),
+        "lgbm": lgb.LGBMRegressor(n_estimators=lp["n_estimators"] or 600, learning_rate=lp["learning_rate"] or 0.05, **lq),
         "rf": RandomForestRegressor(n_estimators=400, **q),
         "et": ExtraTreesRegressor(n_estimators=400, **q),
         "ridge": make_pipeline(StandardScaler(), Ridge(1.0)),
@@ -174,7 +185,7 @@ def best_model(X, y, task="clf", metric=None, folds=5, models=None, seed=SEED):
     """CV every quick model, print a table to stderr, refit the best on all rows. Returns (fitted, rows)."""
     metric = metric or ("acc" if task == "clf" else "rmse")
     _, higher = _metric(metric)
-    models = models or quick_models(task, seed)
+    models = models or quick_models(task, seed, n=len(X))
     rows = []
     for name, m in models.items():
         t = time.time()
