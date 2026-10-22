@@ -1,20 +1,50 @@
 import sys, pathlib; sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[3]))
-from lib import *  # Reader, grid/paths/search helpers: see .claude/skills/ccc-patterns
-# First line '# ccc: pypy' (or CCC_PY=pypy) runs this solver on PyPy.
+import io
+import pandas as pd
+
+WORDS = {w: i for i, w in enumerate(
+    "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen "
+    "sixteen seventeen eighteen nineteen".split())}
+TENS = {w: 10 * i for i, w in enumerate("_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()) if w != "_"}
 
 
-def cases(data: str) -> list:
-    """Split the input into independent cases (picklable). One case for a whole-file problem: [data]."""
-    r = Reader(data)
-    return [r.word() for _ in range(r.int())]
+def num(s):
+    s = str(s).strip().lower()
+    try:
+        return float(s)
+    except ValueError:
+        pass
+    neg = s.startswith("minus ") or s.startswith("negative ")
+    if neg:
+        s = s.split(" ", 1)[1]
+    v = 0
+    for p in s.replace("-", " ").split():
+        v += WORDS.get(p, TENS.get(p, 0))
+    return -v if neg else v
 
 
-def solve_case(c) -> str:
-    raise NotImplementedError
+def load(data):
+    d = pd.read_csv(io.StringIO(data), dtype=str)
+    d.columns = ["id", "t", "h"]
+    d["id"] = d.id.astype(int)
+    d["t"] = d.t.map(num)
+    d["h"] = d.h.map(num)
+    return d
 
 
-# Optional: def check(data: str, out: str) -> bool | (bool, str)
-# If defined, `go` accepts outputs that check() validates even when the example output differs.
+def main():
+    d = load(sys.stdin.read())
+    d = d.sort_values(["t", "h", "id"], ascending=[False, True, True])
+    print(" ".join(map(str, d.id)))
+
+
+def check(data, out):
+    d = load(data)
+    got = out.split()
+    if sorted(map(int, got)) != sorted(d.id):
+        return False, "not a permutation of ids"
+    return True, f"{len(got)} ids"
+
 
 if __name__ == "__main__":
-    run_cases(cases, solve_case)  # parallel across cases when slow, progress + ETA; `ccc.py probe N` times it
+    main()
