@@ -136,3 +136,23 @@ Migratory Birds solve (bootstrap it-2), then strategy, skills and runbook (it-3)
 - `.cursor/rules/ccc.mdc` (always on): Cursor follows CLAUDE.md and reads `.claude/skills/*/SKILL.md` as playbooks.
 - Tested with a fake `agent` binary: auto-pick without claude, `--model` passthrough, active run, paste mode
   announcing level 2 and ALL LEVELS DONE. Not tested: the real Cursor CLI (not installed on the driver Mac).
+
+## 2026-10-23: gurita: Cursor CLI signed in, Friday command set, Birds clock already running
+**Done**
+- Signature `gurita`. macOS 27.0.1 arm64. Python is `python3` 3.13.7 (`python` is not on PATH).
+- `pip install -r requirements.txt` already satisfied (ortools 9.14.6206). Playwright Chromium present.
+  Tests ALL OK: `test_ml.py` 1.9s, `test_lib.py` 6.4s, `test_golive.py` 6.0s.
+- `arena/.auth/credentials.env` was already mode 600 with both values set. `python3 arena/ccc.py login --http` OK as **gura**.
+  `python3 arena/golive.py --preflight` ALL OK: The Posers 3/3, CREIC Cluj-Napoca, OPEN_REGISTRATION, T-16:01, clock +0.05s.
+  Team members from `GET /api/teams/53622`: **iusty64**, **teosux**, **gura**.
+- Cursor CLI installed: `agent` 2026.10.22-27dcf5f, signed in. Friday model slug: `grok-4.7-high`.
+- `python3 arena/duo.py status contest`: driver has not shared level 1 of `contest`.
+
+**Findings**
+- `claude` is on PATH (`~/.local/bin/claude`), so `duo.py shadow` with `--agent auto` starts Claude. Friday must pass `--agent cursor`.
+- The graded Birds Challenge is already RUNNING: `training-ccc-2025.11-ai-birds-66585-8e34538f`, start 2026-10-22 20:45:06Z,
+  240 min, about 224 min left at 21:01 UTC (ends ~03:45 Romania). Level 1 is in `arena/runs/birds-duo` (commit ecb877b);
+  passed files are all null and `bestScore` is null. The 23:41 handoff line "Not started" is stale.
+
+**Next:** Friday 15:30, `bash arena/autopilot.sh --schedule "2026-10-23 15:30" --shadow --agent cursor --model grok-4.7-high`.
+Birds duo only if Iustin's shadow is up during this window.
