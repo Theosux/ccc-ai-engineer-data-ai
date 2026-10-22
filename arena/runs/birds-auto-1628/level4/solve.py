@@ -1,90 +1,52 @@
 import sys, pathlib
-import numpy as np, pandas as pd
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import numpy as np
+from sklearn.ensemble import ExtraTreesClassifier
+from feats import HERE, temps, load, edges, feats
 
-HERE = pathlib.Path(__file__).resolve().parent / "files"
 HEAD = "Flock ID,Species"
-SPECIES = ["Hurracurra Bird", "Medieval Bluetit", "Flanking Blackfinch", "Rusty Goldhammer", "Red Firefinch",
-           "Sticky Wolfthroat"]
+SPECIES = [l.strip() for l in (HERE / "level_4_species.in").read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
-def temps():
-    a = pd.read_csv(HERE / "all_data_from_level_1.in")
-    a.columns = ["BOP", "T", "H"]
-    t = pd.to_numeric(a["T"], errors="coerce")
-    t = np.where(t >= 55, (t - 32) * 5 / 9, t)
-    return dict(zip(a.BOP, t))
+def dedup(p):
+    return tuple(x for i, x in enumerate(p) if i == 0 or x != p[i - 1])
 
 
-def parse(data):
-    flocks = {}
-    for l in data.strip().splitlines()[1:]:
-        f, p = l.split(",")
-        flocks.setdefault(f.strip(), []).append(tuple(int(x) for x in p.split()))
-    return flocks
-
-
-def prefix(paths):
-    n = 0
-    while all(len(p) > n for p in paths) and len({p[n] for p in paths}) == 1:
-        n += 1
-    return n
-
-
-def classify(flocks, T):
-    ids = list(flocks)
-    same = {f: len(set(flocks[f])) == 1 for f in ids}
-    pal = {f: all(p == p[::-1] for p in flocks[f]) for f in ids}
-    nodes = {f: set(x for p in flocks[f] for x in p) for f in ids}
-    heat = {f: np.nanmean([T.get(x, np.nan) for x in nodes[f]]) for f in ids}
-    pre = {f: prefix(flocks[f]) for f in ids}
-    res = {}
-    pals = [f for f in ids if same[f] and pal[f]]
-    if len(pals) >= 2:
-        pals.sort(key=lambda f: len(nodes[f]))
-        small, big = pals[0], pals[-1]
-        if not nodes[small] <= nodes[big]:
-            print(f"warn: {small} not subset of {big}", file=sys.stderr)
-        res[small], res[big] = "Sticky Wolfthroat", "Medieval Bluetit"
-    elif len(pals) == 1:
-        res[pals[0]] = "Medieval Bluetit"
-    rest = [f for f in ids if f not in res]
-    bf = [f for f in rest if same[f]]
-    for f in bf[:1]:
-        res[f] = "Flanking Blackfinch"
-    rest = [f for f in ids if f not in res]
-    if rest:
-        g = max(rest, key=lambda f: pre[f])
-        if pre[g] >= 2:
-            res[g] = "Rusty Goldhammer"
-    rest = sorted([f for f in ids if f not in res], key=lambda f: -heat[f])
-    left = [s for s in ["Hurracurra Bird", "Red Firefinch", "Rusty Goldhammer", "Flanking Blackfinch",
-                        "Sticky Wolfthroat", "Medieval Bluetit"] if s not in res.values()]
-    for f, s in zip(rest, left):
-        res[f] = s
-    for f in ids:
-        print(f"flock {f}: n={len(flocks[f])} same={same[f]} pal={pal[f]} pre={pre[f]} heat={heat[f]:.1f} "
-              f"nodes={len(nodes[f])} -> {res[f]}", file=sys.stderr)
-    return res
+def build(d, T):
+    F = feats(d, T, None)
+    E = {f: set().union(*[edges(dedup(p)) for p in g.p]) for f, g in d.groupby("f", sort=False)}
+    palf = set(F.f[F.palq > 0.8])
+    F["blue"] = [len(E[f] & set().union(*[E[h] for h in palf if h != f])) / max(1, len(E[f])) for f in F.f]
+    return F
 
 
 def main():
-    flocks = parse(sys.stdin.read())
-    res = classify(flocks, temps())
+    T = temps()
+    d = load(sys.stdin.read())
+    main_d = load((HERE / "in_level-4_1-main.txt").read_text(encoding="utf-8"))
+    Fm = build(main_d, T)
+    tr = Fm[Fm.s != "missing"]
+    Fd = build(d, T) if len(d) != len(main_d) else Fm
+    te = Fd[Fd.s == "missing"]
+    cols = [c for c in tr.columns if c not in ("f", "s")]
+    m = ExtraTreesClassifier(1000, random_state=0, n_jobs=-1).fit(tr[cols].values.astype(float), np.array(tr.s.tolist()))
+    pred = m.predict(te[cols].values.astype(float)) if len(te) else []
     print(HEAD)
-    for f in flocks:
-        print(f"{f},{res[f]}")
+    for f, p in zip(te.f, pred):
+        print(f"{f},{p}")
+    from collections import Counter
+    print(Counter(pred), file=sys.stderr)
 
 
 def check(data, out):
-    flocks = parse(data)
+    d = load(data)
+    want = [str(f) for f in d[d.s == "missing"].f.drop_duplicates()]
     lines = out.strip().splitlines()
     if lines[0] != HEAD:
         return False, "header"
     rows = [l.split(",") for l in lines[1:]]
-    ok = [r[0] for r in rows] == list(flocks) and all(r[1] in SPECIES for r in rows)
-    if len(flocks) == 6:
-        ok = ok and len({r[1] for r in rows}) == 6
-    return ok, "ok" if ok else "bad ids/species"
+    ok = [r[0] for r in rows] == want and all(r[1] in SPECIES for r in rows)
+    return ok, f"{len(rows)} rows vs {len(want)}"
 
 
 if __name__ == "__main__":
