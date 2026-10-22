@@ -1,11 +1,11 @@
 {
-  "id": 12543,
-  "name": "training-ccc-2025.11-ai-birds-66585-8e34538f",
-  "slug": "training-ccc-2025-11-ai-birds-66585-8e34538f",
+  "id": 12566,
+  "name": "training-ccc-2025.11-ai-birds-27853-dacd42e0",
+  "slug": "training-ccc-2025-11-ai-birds-27853-dacd42e0",
   "contestType": "CLASSIC",
   "status": "RUNNING",
-  "startTime": "2026-10-22T20:45:06.746725Z",
-  "registrationStartTime": "2026-10-22T20:45:06.746725Z",
+  "startTime": "2026-10-22T21:06:14.056212Z",
+  "registrationStartTime": "2026-10-22T21:06:14.056212Z",
   "durationMinutes": 240,
   "maxTeamSize": 1,
   "editionName": null,
@@ -24,5 +24,5 @@
   "registrationCount": 1,
   "totalLevels": 6,
   "recruiting": false,
-  "serverNowMs": 1792701906942
+  "serverNowMs": 1792703174241
 }

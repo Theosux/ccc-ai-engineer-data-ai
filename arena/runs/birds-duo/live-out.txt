@@ -1,7 +1,7 @@
-===== Level 1/6  /Users/guritaeduard-adrian/ccc/ccc-ai-engineer-data-ai/arena/runs/birds-duo/level1  (1.1s)  
+===== Level 1/6  /Users/iustinepanu/ccc/ccc-ai-engineer-data-ai/arena/runs/birds-duo/level1  (1.3s)  
 inputs: 0-example*, 1-a, 2-b, 3-c, 4-d, 5-e  (* = unscored)
 sizes: 0-example: 0 KB, 5 lines, first token BOP,Temperature, longest line 33 | 1-a: 0 KB, 6 lines, first token BOP,Temperature, longest line 33 | 2-b: 1 KB, 52 lines, first token BOP,Temperature, longest line 33 | 3-c: 2 KB, 201 lines, first token BOP,Temperature, longest line 33 | 4-d: 1 KB, 74 lines, first token BOP,Temperature, longest line 33 | 5-e: 24 KB, 2172 lines, first token BOP,Temperature, longest line 33
-solve.py: stub
+solve.py: kept existing
 ----- statement (statement.txt, pages [1, 2, 3, 4]; `fetch 1 --png` renders them)
 [p1]
 CCC Data & AI:
