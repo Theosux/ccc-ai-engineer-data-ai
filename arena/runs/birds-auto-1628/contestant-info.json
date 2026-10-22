@@ -1,0 +1,216 @@
+{
+  "score": {
+    "gameScore": {
+      "timeMs": 1792675437744,
+      "level": 7
+    },
+    "state": {
+      "level1": {
+        "kind": "levels",
+        "passedAt": 1792674644179,
+        "submissions": [
+          {
+            "fileId": "1-a",
+            "submittedAt": 1792674623003,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "2-b",
+            "submittedAt": 1792674623142,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "4-d",
+            "submittedAt": 1792674623311,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "3-c",
+            "submittedAt": 1792674623441,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "5-e",
+            "submittedAt": 1792674623592,
+            "result": {
+              "correct": false,
+              "error": "Ordering does not match (1062/2171 positions correct)."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "5-e",
+            "submittedAt": 1792674644179,
+            "result": {
+              "correct": true,
+              "error": "Correct ordering."
+            },
+            "submittedBy": "iusty64"
+          }
+        ],
+        "passedFiles": {
+          "1-a": 1792674623003,
+          "2-b": 1792674623142,
+          "3-c": 1792674623441,
+          "4-d": 1792674623311,
+          "5-e": 1792674644179
+        }
+      },
+      "level2": {
+        "kind": "levels",
+        "passedAt": 1792674731206,
+        "submissions": [
+          {
+            "fileId": "3-c",
+            "submittedAt": 1792674730652,
+            "result": {
+              "correct": true,
+              "error": "RMSE = 2.6986 (limit 3.00)."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "1-a",
+            "submittedAt": 1792674730883,
+            "result": {
+              "correct": true,
+              "error": "RMSE = 2.5604 (limit 6.00)."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "2-b",
+            "submittedAt": 1792674731206,
+            "result": {
+              "correct": true,
+              "error": "RMSE = 2.5540 (limit 3.00)."
+            },
+            "submittedBy": "iusty64"
+          }
+        ],
+        "passedFiles": {
+          "1-a": 1792674730883,
+          "2-b": 1792674731206,
+          "3-c": 1792674730652
+        }
+      },
+      "level3": {
+        "kind": "levels",
+        "passedAt": 1792674776257,
+        "submissions": [
+          {
+            "fileId": "1-a",
+            "submittedAt": 1792674775975,
+            "result": {
+              "correct": true,
+              "error": "All species correct."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "2-b",
+            "submittedAt": 1792674776116,
+            "result": {
+              "correct": true,
+              "error": "All species correct."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "3-c",
+            "submittedAt": 1792674776257,
+            "result": {
+              "correct": true,
+              "error": "All species correct."
+            },
+            "submittedBy": "iusty64"
+          }
+        ],
+        "passedFiles": {
+          "1-a": 1792674775975,
+          "2-b": 1792674776116,
+          "3-c": 1792674776257
+        }
+      },
+      "level4": {
+        "kind": "levels",
+        "passedAt": 1792674838190,
+        "submissions": [
+          {
+            "fileId": "1-main",
+            "submittedAt": 1792674838190,
+            "result": {
+              "correct": true,
+              "error": "macro-F1 = 0.9755 (threshold 0.90)."
+            },
+            "submittedBy": "iusty64"
+          }
+        ],
+        "passedFiles": {
+          "1-main": 1792674838190
+        }
+      },
+      "level5": {
+        "kind": "levels",
+        "passedAt": 1792675165500,
+        "submissions": [
+          {
+            "fileId": "1-main",
+            "submittedAt": 1792674936662,
+            "result": {
+              "correct": false,
+              "error": "Top-50 accuracy = 0.3207 (threshold 0.50)."
+            },
+            "submittedBy": "iusty64"
+          },
+          {
+            "fileId": "1-main",
+            "submittedAt": 1792675165500,
+            "result": {
+              "correct": true,
+              "error": "Top-50 accuracy = 0.5280 (threshold 0.50)."
+            },
+            "submittedBy": "iusty64"
+          }
+        ],
+        "passedFiles": {
+          "1-main": 1792675165500
+        }
+      },
+      "level6": {
+        "kind": "levels",
+        "passedAt": 1792675437744,
+        "submissions": [
+          {
+            "fileId": "1-main",
+            "submittedAt": 1792675437744,
+            "result": {
+              "correct": true,
+              "error": "Top-50 accuracy = 1.0000 (threshold 1.00)."
+            },
+            "submittedBy": "iusty64"
+          }
+        ],
+        "passedFiles": {
+          "1-main": 1792675437744
+        }
+      }
+    }
+  }
+}
