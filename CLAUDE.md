@@ -7,14 +7,14 @@ follow it exactly. It pulls the latest work from teammates, reloads all project 
 and tells you which messages the other teammate's Claude left for you.
 
 ## Who works here
-- **Team:** Iustin (signature `iustin`, contest driver) plus a second member replacing Dobrin, who left on
-  2026-10-21 (name and signature TBD, see `docs/team/roles.md`). Each person has their own Claude Code subscription.
+- **Team:** Iustin (signature `iustin`, contest driver) and Gurita (signature `gurita`, second opinion), who replaced
+  Dobrin on 2026-10-22. Each person has their own Claude Code subscription.
   Teo (signature `teo-bootstrap`) bootstrapped the repo once and competes in CLASSIC, not here.
 - **Goal:** win **42nd DATA/AI CCC**, Fri **23 Oct 2026, 13:00 UTC = 16:00 Romania**, 240 min, teams of up to 3.
 - **Contest driver** (the one laptop that runs the tooling and submits): see `docs/team/roles.md`.
   While it says TBD, ask the user once per session and record the answer there.
 - **Signature:** every session has exactly one signature. If you don't know it, read `.claude/signature.local`
-  (gitignored, per laptop); if that is missing too, ask for the name (`iustin`, or the new member's signature) and write the answer there.
+  (gitignored, per laptop); if that is missing too, ask "iustin or gurita?" and write the answer there.
 
 ## Where things live
 - `docs/00-INDEX.md`: map of every doc. Start here.

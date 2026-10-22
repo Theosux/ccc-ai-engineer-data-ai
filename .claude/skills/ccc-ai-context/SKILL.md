@@ -1,6 +1,6 @@
 ---
 name: ccc-ai-context
-description: Session-start ritual for the CCC DATA/AI repo - sets the signature (iustin or the new member), pulls teammates' pushes, reloads contest facts, strategy, progress and the handoff messages addressed to you. Use when the message contains "signature: <name>" or starts with "We are working on ccc data/ai", or whenever project context is missing (e.g. after /clear).
+description: Session-start ritual for the CCC DATA/AI repo - sets the signature (iustin/gurita), pulls teammates' pushes, reloads contest facts, strategy, progress and the handoff messages addressed to you. Use when the message contains "signature: <name>" or starts with "We are working on ccc data/ai", or whenever project context is missing (e.g. after /clear).
 ---
 
 # CCC DATA/AI context ritual
@@ -8,7 +8,7 @@ description: Session-start ritual for the CCC DATA/AI repo - sets the signature 
 Run these steps in order before answering anything else. Read in parallel where possible.
 
 0. **Signature.** Take it from `signature: <name>` in the user's message. Otherwise read `.claude/signature.local`.
-   Otherwise ask for the name (`iustin` or the new member's signature). Write the name (one line) to `.claude/signature.local` (gitignored).
+   Otherwise ask "iustin or gurita?". Write the name (one line) to `.claude/signature.local` (gitignored).
 1. `git pull --rebase` (if it fails because of local changes: `git stash`, pull, `git stash pop`, report it).
 2. Read `docs/00-INDEX.md` and `docs/team/protocol.md`.
 3. Read every file in `docs/contest/` and `docs/strategy/`.
