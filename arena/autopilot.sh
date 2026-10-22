@@ -10,8 +10,8 @@
 #                                               # submit, hand solvers over via git (arena/duo.py; any OS: python arena/duo.py shadow)
 #   ... --run NAME                              # run name (default: contest; --train: birds-auto-HHMM); driver and shadow must match
 #   ... --headless                              # `claude -p` instead of the interactive window (log: <run>/autopilot.log)
-#   ... --dry-run                               # probe fast mode, build the prompt, print the agent command, exit
-#                                               # (no login, train, golive or agent); CCC_FAST=0 disables fast mode
+#   ... --dry-run                               # build the prompt, print the agent command, exit
+#                                               # (no login, train, golive or agent)
 set -u
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO" || exit 1
@@ -66,38 +66,17 @@ say_() { command -v say >/dev/null && say "$1" & }
 caffeinate -dimsu -w $$ &          # no sleep while this script (and the Claude session it becomes) runs
 echo "== autopilot $MODE $(date '+%H:%M:%S')"
 
-# Agent command, decided BEFORE go-live (the fast-mode probe takes ~10 s; no time pressure at 15:30).
 # Research 2026-10-23 (docs/progress-log.md): keep Opus at high effort (every 6/6 rehearsal ran at high; low saves
-# < 1 min/game and skips checks on the hard level), fast mode = same quality, faster output, needs usage credits.
+# < 1 min/game and skips checks on the hard level). No fast mode: it needs usage credits, which stay off.
 if [ "$AGENT" = auto ]; then command -v claude >/dev/null && AGENT=claude || AGENT=cursor; fi
-FAST=off
 if [ "$AGENT" = claude ]; then
   RUNNER=(claude --dangerously-skip-permissions --model "${MODEL:-opus}" --effort high --strict-mcp-config); P=(-p)
-  if [ "${CCC_FAST:-1}" != 0 ]; then
-    PROBE="$(mktemp -t ccc-fast)"
-    claude -p --model "${MODEL:-opus}" --effort high --strict-mcp-config --settings '{"fastMode": true}' \
-      --output-format json "Reply with the word OK and nothing else." > "$PROBE" 2>&1 &
-    PID=$!; { sleep ${CCC_FAST_TIMEOUT:-90}; kill "$PID" 2>/dev/null; } >/dev/null 2>&1 & WD=$!; disown "$WD"
-    wait "$PID" 2>/dev/null; RC=$?; kill "$WD" 2>/dev/null
-    # fast_mode_state=on means requested; usage.speed=fast means actually served fast (needs usage credits)
-    SPEED="$(python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); print(d.get("fast_mode_state","?"), (d.get("usage") or {}).get("speed","?"))' "$PROBE" 2>/dev/null)"
-    if [ "$RC" = 0 ] && [ "${SPEED%% *}" = on ]; then
-      RUNNER+=(--settings '{"fastMode": true}')  # kept even at standard speed: it falls back by itself
-      if [ "${SPEED##* }" = fast ]; then FAST=on; else
-        FAST="requested, served at ${SPEED##* } speed"
-        echo "WARN: fast mode is on but answers come at ${SPEED##* } speed: turn on usage credits (claude.ai settings) for the speed-up"
-      fi
-    else
-      echo "WARN: fast mode unavailable (exit $RC: $(head -c 300 "$PROBE" | tr '\n' ' ')); normal speed"
-    fi
-    rm -f "$PROBE"
-  fi
 else                               # Cursor CLI (https://cursor.com/cli): --force runs commands without asking
   EXE="$(command -v agent || command -v cursor-agent)"
   [ -n "$EXE" ] || { echo "ERROR: neither claude nor the Cursor CLI (agent) is installed: https://cursor.com/cli"; exit 2; }
   RUNNER=("$EXE" --force ${MODEL:+--model "$MODEL"}); P=(-p --output-format text)
 fi
-echo "== agent: ${RUNNER[*]} (fast mode $FAST)"
+echo "== agent: ${RUNNER[*]}"
 
 build_prompt() {                   # placeholders + the two solve skills inlined (saves the first tool round trip)
   sed -e "s#{{MODE}}#$MODE#g" -e "s#{{RUN}}#$RUN#g" -e "s#{{LIVE_OUT}}#$LIVE_OUT#g" \
@@ -135,7 +114,7 @@ say_ "Contest is live. The agent is solving."
 python3 arena/duo.py share "$RUN" || echo "WARN: share failed (the shadow laptop waits for level 1 via git)"
 
 PROMPT="$(build_prompt)"
-echo "== handing over to $AGENT ($(date '+%H:%M:%S')), run $RUN, fast mode $FAST"
+echo "== handing over to $AGENT ($(date '+%H:%M:%S')), run $RUN"
 if [ "$HEADLESS" = 1 ]; then
   "${RUNNER[0]}" "${P[@]}" "${RUNNER[@]:1}" "$PROMPT" > "arena/runs/$RUN/autopilot.log" 2>&1
   echo "== $AGENT finished ($(date '+%H:%M:%S')); log arena/runs/$RUN/autopilot.log"

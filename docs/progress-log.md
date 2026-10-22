@@ -192,3 +192,5 @@ Birds duo only if Iustin's shadow is up during this window.
 
 **Next:** after ~04:06 (the current Birds Challenge expires): usage credits on, `bash arena/autopilot.sh --train
 --run birds-speed`, compare `timing.jsonl` with the cold run (L1 47.6, L2 85.4, L3 43.4, L4 60.0, L5 308.9, L6 119.8 s).
+- Follow-up (iustin): fast mode removed from `autopilot.sh` again. Usage credits stay off on claude.ai, so it could
+  only ever run at standard speed (the probe showed `speed=standard`).

@@ -14,11 +14,9 @@ never asks, commits after each level, and follows the fallback ladder on its own
   15:30 and starts the line above). Undo: `--unschedule`. Lid open, charger in, Wi-Fi joined.
 - The Claude window stays interactive: watch it; type only if it is clearly stuck or the platform needs a click.
 - Rehearsal: `bash arena/autopilot.sh --train [--headless]` = fresh Birds Challenge run through the same hand-off.
-- Agent command (since 2026-10-23, from the speed research): `claude --model opus --effort high --strict-mcp-config`
-  plus fast mode. Before go-live a 3 s probe checks fast mode: `usage.speed=fast` -> on; `fast_mode_state=on` but
-  `speed=standard` -> warning "turn on usage credits" (setting kept, it falls back by itself); error or 90 s hang ->
-  normal speed. `CCC_FAST=0` skips it. **Turn usage credits on in claude.ai before 15:30** for the speed-up.
-- Check without touching the platform: `bash arena/autopilot.sh --dry-run` (probe + prompt build, prints the command).
+- Agent command (since 2026-10-23, from the speed research): `claude --model opus --effort high --strict-mcp-config`.
+  No fast mode: it needs usage credits on claude.ai, which the team keeps off (decided 2026-10-23).
+- Check without touching the platform: `bash arena/autopilot.sh --dry-run` (prompt build, prints the command).
 - Prompt rules added: the two solve skills are inlined; hard-level protocol (forecast-type level: `solve.py` +
   `solve_alt1.py` + `solve_alt2.py` scored on a time-ordered holdout before the first submit, next-best at once on
   WRONG); teammate's solver at the first WRONG; pace rules (no sleep/poll, no `=word` in zsh).
