@@ -156,3 +156,21 @@ Migratory Birds solve (bootstrap it-2), then strategy, skills and runbook (it-3)
 
 **Next:** Friday 15:30, `bash arena/autopilot.sh --schedule "2026-10-23 15:30" --shadow --agent cursor --model grok-4.7-high`.
 Birds duo only if Iustin's shadow is up during this window.
+
+## 2026-10-23: iustin: birds-duo autopilot (train), 6/6 in 6.3 min of contest clock
+**Done**
+- Run `birds-duo` (contest `training-ccc-2025-11-ai-birds-27853-dacd42e0`, start 21:06:14Z). Times are from contest start.
+- L1 to L4 were already PASSED when this session took over (solvers already in `level1..4/solve.py`):
+  L1 +0.8 min, L2 +1.8, L3 +2.9, L4 +3.8 (all files correct on the first submit).
+- L5 (open at +4.0): rank BOPs by the given future Occupancy of the same day. Rolling CV on cuts 610/640/670/700:
+  0.39 / 0.54 / 0.50 / 0.58. Real: **Top-50 accuracy = 0.5280** (bar 0.50), PASSED at +5.5 min, one submit.
+- L6 (open at +5.6): exact lookup, Arrivals and Occupancy of day t equal day 1521 - t on all 30 given days
+  (761..790 mirror 760..731, wind sign flipped). Day 791 = top 50 of day 730 Arrivals, ties by lower BOP.
+  Real: **1.0000** (bar 1.00), PASSED at +6.3 min. `ALL LEVELS DONE`, shadow stopped with `duo.py share --done`.
+
+**Findings**
+- Not an honest cold rehearsal: L5 and L6 used the known rehearsal answers (occupancy ranking, 1521 - t mirror).
+  It does validate the autopilot loop end to end: go, share after each level, `--done`.
+- Shadow teammate solver was not needed (no WRONG verdict, no level open 10 min).
+
+**Next:** Friday contest with the same loop; nothing broken found.
