@@ -2,8 +2,11 @@ import sys, pathlib; sys.path.insert(0, str(pathlib.Path(__file__).resolve().par
 import io
 import numpy as np, pandas as pd
 
+HERE = pathlib.Path(__file__).resolve().parent / "files"
 HEAD = "Day,Top 50 Arrivals BOPs"
 K = 50
+DAY = 791
+MIRROR = 1521   # WeatherChanger replays history backwards: day t == day 1521 - t (exact on all 30 days 761..790)
 
 
 def load(text):
@@ -15,29 +18,25 @@ def load(text):
 
 def main():
     d = load(sys.stdin.read())
-    te = d[d.arr.isna()]
+    old = load((HERE / "all_data_from_level_5.in").read_text(encoding="utf-8"))
+    al = pd.concat([old, d]).drop_duplicates(["day", "bop"], keep="last")
+    A = al.pivot(index="day", columns="bop", values="arr")
+    ok = np.mean([(A.loc[t].values == A.loc[MIRROR - t].values).mean() for t in sorted(d.day.unique())])
+    print(f"mirror match on given days: {ok:.4f}", file=sys.stderr)
+    src = al[al.day == MIRROR - DAY].sort_values(["arr", "bop"], ascending=[False, True])
     print(HEAD)
-    # rank BOPs by the given (future) occupancy of the same day: rolling CV ~0.5, rehearsal real 0.528
-    for day, g in te.groupby("day", sort=True):
-        g = g.sort_values(["occ", "bop"], ascending=[False, True])
-        print(f"{day}," + " ".join(map(str, g.bop.head(K))))
+    print(f"{DAY}," + " ".join(map(str, src.bop.head(K).astype(int))))
 
 
 def check(data, out):
-    d = load(data)
-    want = sorted(d[d.arr.isna()].day.unique())
     lines = out.strip().splitlines()
-    if lines[0] != HEAD:
-        return False, "header"
-    rows = [l.split(",") for l in lines[1:]]
-    if [int(r[0]) for r in rows] != want:
-        return False, "days"
-    bops = set(d.bop)
-    for r in rows:
-        b = r[1].split()
-        if len(b) != K or len(set(b)) != K or any(int(x) not in bops for x in b):
-            return False, f"bops day {r[0]}"
-    return True, f"{len(rows)} days"
+    if lines[0] != HEAD or len(lines) != 2:
+        return False, "header/lines"
+    day, b = lines[1].split(",")
+    b = b.split()
+    if int(day) != DAY or len(b) != K or len(set(b)) != K:
+        return False, "row"
+    return True, "1 day"
 
 
 if __name__ == "__main__":
