@@ -20,8 +20,10 @@ while [ $# -gt 0 ]; do
     --headless) HEADLESS=1 ;;
     --unschedule)
       launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null; rm -f "$PLIST"; echo "autopilot schedule removed"; exit 0 ;;
-    --schedule)
-      H="${2%%:*}"; M="${2##*:}"
+    --schedule)                    # HH:MM (today) or YYYY-MM-DD HH:MM
+      WHEN="$2"; DAY="$(date +%Y-%m-%d)"
+      case "$WHEN" in *" "*) DAY="${WHEN%% *}"; WHEN="${WHEN##* }" ;; esac
+      H="${WHEN%%:*}"; M="${WHEN##*:}"; MO="$(date -j -f %Y-%m-%d "$DAY" +%-m)"; DD="$(date -j -f %Y-%m-%d "$DAY" +%-d)"
       CMD="$REPO/arena/.autopilot.command"
       printf '#!/bin/bash\ncd "%s" && bash arena/autopilot.sh\n' "$REPO" > "$CMD"; chmod +x "$CMD"
       cat > "$PLIST" <<EOF
@@ -30,11 +32,11 @@ while [ $# -gt 0 ]; do
 <plist version="1.0"><dict>
   <key>Label</key><string>$LABEL</string>
   <key>ProgramArguments</key><array><string>/usr/bin/open</string><string>-a</string><string>Terminal</string><string>$CMD</string></array>
-  <key>StartCalendarInterval</key><dict><key>Month</key><integer>$(date +%-m)</integer><key>Day</key><integer>$(date +%-d)</integer><key>Hour</key><integer>$((10#$H))</integer><key>Minute</key><integer>$((10#$M))</integer></dict>
+  <key>StartCalendarInterval</key><dict><key>Month</key><integer>$MO</integer><key>Day</key><integer>$DD</integer><key>Hour</key><integer>$((10#$H))</integer><key>Minute</key><integer>$((10#$M))</integer></dict>
 </dict></plist>
 EOF
       launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null
-      launchctl bootstrap "gui/$(id -u)" "$PLIST" && echo "autopilot scheduled for $(date +%Y-%m-%d) $2 (Terminal opens by itself; keep the lid open)"
+      launchctl bootstrap "gui/$(id -u)" "$PLIST" && echo "autopilot scheduled for $DAY $WHEN (Terminal opens by itself; keep the lid open)"
       exit 0 ;;
     *) echo "unknown option $1"; exit 2 ;;
   esac
