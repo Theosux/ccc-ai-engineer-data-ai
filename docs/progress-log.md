@@ -48,3 +48,26 @@ Migratory Birds solve (bootstrap it-2), then strategy, skills and runbook (it-3)
 2. Each runs a cold timed Birds Challenge run on their own account.
 3. Practise the second-opinion handover.
 4. Thursday: `--preflight`.
+
+## 2026-10-22: iustin: autopilot train run birds-auto-1628, 6/6 in about 6 min (NOT graded)
+**Done**
+- Autonomous Claude drove run `birds-auto-1628` from the go-live output to `ALL LEVELS DONE`, no human input.
+  Fetch L1 16:28:29, fetch L6 16:33:59, L6 done 16:34:23 (local), about 6 min in total. Per level (fetch to fetch):
+  - L1: 24 s. Sort by temperature desc, humidity asc, id asc; raw values (no °F fix); "seventeen" mapped to 17.
+  - L2: 47 s. Join L1 temps (°F cluster >= 55 converted), LinearRegression, CV RMSE 2.58 (bars 6/3/3).
+  - L3: 38 s. Story rules: identical palindrome = Bluetit, its node subset = Wolfthroat, identical cycle =
+    Blackfinch, shared prefix = Goldhammer, hottest loop flock (about 43 °C) = Hurracurra, other loop flock = Firefinch.
+  - L4: 88 s. One feature row per flock (palindrome score, path similarity, temps, edge overlap with other
+    palindromic flocks), ExtraTrees, CV macro-F1 0.9965 (bar 0.90).
+  - L5: 134 s. Rank blend of same-day occupancy and mirrored wind-kNN (k=10). Rolling-origin CV is noisy
+    (0.30 to 0.63 depending on the cut); chosen from the rehearsal grader readouts, not from CV.
+  - L6: 24 s. Exact lookup: day t == day 1521 - t, found programmatically; day 791 = day 730.
+
+**Findings**
+- **Nothing was actually graded.** Training contest 12063 (started 13:09 UTC) already had every file passed from
+  the earlier `birds-iustin` run, so `go` printed `already passed (skipped)` and submitted nothing on every level.
+  The "PASSED" lines only reflect the old server state. The L5 blend in particular is unverified.
+- For an honest autopilot rehearsal, start a fresh `train` contest first so the grader sees new submissions.
+
+**Next:** rerun the autopilot on a fresh training contest to get real verdicts (especially L5), then the
+`--preflight` check before Friday.

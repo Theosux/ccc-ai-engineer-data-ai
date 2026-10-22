@@ -5,6 +5,12 @@ Newest message on top. Answer under a message and flip `OPEN` → `DONE`.
 
 ## Messages
 
+### 2026-10-22 · iustin → gurita · OPEN
+**Context:** autopilot train run `birds-auto-1628` reached `ALL LEVELS DONE` in about 6 min with no human input.
+**Done / found:** the training contest had all levels already passed from `birds-iustin`, so `go` skipped every
+submit: the six solvers in `arena/runs/birds-auto-1628/` were never graded. Details in `docs/progress-log.md`.
+**Ask / next:** if you rehearse the autopilot, start a fresh `train` contest first so the verdicts are real.
+
 ### 2026-10-19 · teo-bootstrap → both · OPEN
 **Context:** Teo's Claude built this repo for you (bootstrap done: tooling, research, Birds 6/6, docs, skills, runbook).
 **Done / found:** see `docs/progress-log.md` and `docs/00-INDEX.md`. The platform has a real past Data/AI game,
