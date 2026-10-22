@@ -1,3 +1,0 @@
-Flock ID,Species
-1,Medieval Bluetit
-2,Sticky Wolfthroat

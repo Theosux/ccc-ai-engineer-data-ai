@@ -1,2 +1,0 @@
-Flock ID,Species
-17,Red Firefinch
