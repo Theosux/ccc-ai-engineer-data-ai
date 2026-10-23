@@ -1,7 +1,8 @@
 """Client for the Colony: One game server (/colony-api). Server plays MAGENTA."""
 import sys, json, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[3]))
-import ccc, requests
+import ccc, requests, time
+_LAST=[0.0]
 
 NAME, RUN, _ = ccc.active_run()
 EXTRA = {"Sec-Fetch-Mode": "cors", "Sec-Fetch-Dest": "empty", "Accept": "application/json"}
@@ -25,4 +26,12 @@ def new_game(scene):
 
 
 def move(gid, index):
+    w = _LAST[0] + 1.05 - time.time()
+    if w > 0: time.sleep(w)
+    for _ in range(5):
+        try:
+            r = _post(f"/games/{gid}/moves", {"index": index}); _LAST[0] = time.time(); return r
+        except RuntimeError as e:
+            if "429" not in str(e): raise
+            time.sleep(1.1)
     return _post(f"/games/{gid}/moves", {"index": index})
