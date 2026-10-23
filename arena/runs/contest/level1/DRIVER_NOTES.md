@@ -1,0 +1,1 @@
+- 16:07:01 Colony One is a GAME: no input files. API: arena/runs/contest/colony/capi.py (POST /colony-api/games {scene}, /games/{id}/moves {index}; needs Sec-Fetch-Mode cors headers). Scenes listed in game JS (hy object). L1 passed: password Black-Hole-WX-89, kernel squares C5/E5/H2. Submit via colony/sub.py LVL FID TEXT (driver only).
