@@ -194,3 +194,26 @@ Birds duo only if Iustin's shadow is up during this window.
 --run birds-speed`, compare `timing.jsonl` with the cold run (L1 47.6, L2 85.4, L3 43.4, L4 60.0, L5 308.9, L6 119.8 s).
 - Follow-up (iustin): fast mode removed from `autopilot.sh` again. Usage credits stay off on claude.ai, so it could
   only ever run at standard speed (the probe showed `speed=standard`).
+
+## 2026-10-23 16:00-20:00 RO: iustin: 42nd DATA/AI CCC "Colony: One" (autopilot driver)
+**Result**
+- L1 13:06:40 UTC (6:40), L2 13:11:57 (11:57), L3 13:13:32 (13:32), all on the first submit. L4 is an open-ended
+  live tournament (Glicko rating, optimisation level): seat models are listed below.
+- The game had no input files: everything goes through the game server. `arena/runs/contest/colony/`: `capi.py`
+  (`/colony-api/games` + `/moves`, needs `Sec-Fetch-Mode: cors` / `Sec-Fetch-Dest: empty`, otherwise 403
+  "only accessible through the CCC platform"), `sub.py` (text answers), `modelrun.py` (L3 `/model-run`, then submit the
+  key), `upload4.py` (L4 `/model-upload`), `dash.py` (`/tournament-dashboard`). The scene list is in the game JS (`hy={...}`).
+- L1: password `Black-Hole-WX-89`, plus the kernel square after 2 actions that is safe from every 2-action MAGENTA
+  reply (`l1.py`). L2: a search player against the server bot (`player.py`); a win returns a password.
+  L3: a handcrafted linear ONNX (material tanh value, centrality policy) won its first match against the greedy bot.
+- L4: AlphaZero-lite. `level4/env4/selfplay.py` (referee MCTS, root Q stored) -> `net.py` (conv ResNet, MPS, flip
+  augmentation, value target 0.5 z + 0.5 q, Constant nodes -> initializers, input/value clamps) -> `match.py` gate ->
+  `upload4.py`. Seats: v1 linear, n1 48x4 (95/100 vs v1), n2, n2b 64x6, n4e (ensemble, strategy session), n5, n6, n7c,
+  n8b 96x6 from scratch (71% vs n7c), n9b (n8b fine-tuned, 66.7% vs n8b), n10b (69% vs n9b),
+  n11c final at 16:19 UTC (n10b + 3 epochs on fresh cloud data only, 71% vs n10b). Rejected: n9c 128ch from scratch
+  (25% vs n10b), n11b 54%, H100 fine-tunes n10g/n12g/h/i/j 45-52% vs the seat. Rating about 2100, rank ~20 at 16:15 UTC.
+- Team: two more local Claude sessions (strategy + leaderboard research) and cloud/second-Mac self-play fed env4/data;
+  only the driver uploaded. Cutoff for uploads 19:35 RO (games/min fell to 0.7 per team, 8 games needed).
+- Lessons: the validator feeds numeric extremes, so clamp the input to [0,1] and the value to [-1,1] (n7 was rejected
+  with 422). A bigger net (96 channels) gave the largest single step. Ensembles with older nets never beat the newest
+  single net. In tlogs, `score` is from CYAN's view. `pkill -f` on a Pool parent leaves orphan workers.
