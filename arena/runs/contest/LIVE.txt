@@ -1,0 +1,2 @@
+live detected 2026-10-23T16:00:01.737706 by D1: start time passed and game assigned
+game Colony: One https://colony.codingcontest.org/

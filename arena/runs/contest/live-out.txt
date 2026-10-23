@@ -1,0 +1,187 @@
+== Preflight ==
+ERROR: network error on GET https://codingcontest.org/api/auth/current-user: ConnectionError. Check the connection and retry.
+  [FAIL] login: SystemExit(2)
+ERROR: network error on GET https://codingcontest.org/api/contests/my-registrations: ConnectionError. Check the connection and retry.
+  [FAIL] registration: SystemExit(2)
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+  [FAIL] contest: SystemExit(2)
+ERROR: network error on POST https://codingcontest.org/api/game-token: ConnectionError. Check the connection and retry.
+  [WARN] token probe: SystemExit(2)
+  [WARN] PyPy: missing (optional, not needed for ML)
+  [OK  ] lib tests: ALL OK (6.9s)
+  [FAIL] git push: fatal: unable to access 'https://github.com/Theosux/ccc-ai-engineer-data-ai/': Could not resolve host: github.com
+  [OK  ] disk: 213.4 GB free
+  [OK  ] browser fallback: playwright available (golive --browser / ccc.py login)
+== Preflight HAS FAILURES (saved /Users/iustinepanu/ccc/ccc-ai-engineer-data-ai/arena/runs/contest/preflight.json) ==
+Preflight has failures; continuing to watch anyway (fix them now).
+FALLBACK LADDER (docs/strategy/contest-day-runbook.md):
+  * 401 / not logged in      -> python arena/ccc.py login --http ; else python arena/ccc.py login (Edge)
+  * live but no game URL     -> rerun with --browser (D6 reads the real game iframe), or open the contest in Opera GX
+  * game token refused (403) -> open the contest page in Opera GX (check-in / accept terms?), then rerun golive
+  * zip download fails       -> download level zip in Opera GX, then: python arena/ccc.py fetch N --zip <path>
+  * submit fails             -> drag & drop arena/runs/contest/levelN/out/* into the platform's Solutions panel
+  * venue Wi-Fi down         -> phone hotspot; nothing to reconfigure
+
+WATCHING 42nd-data-ai-ccc-5873 -> run 'contest'. Ctrl+C to abort. Log: /Users/iustinepanu/ccc/ccc-ai-engineer-data-ai/arena/runs/contest/golive-log.jsonl
+[15:38:05] D2: error #1: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'codingcontest.org\', port=443): Max retries exceeded with url: /api/contests/status/stream (Caused by 
+ERROR: network error on GET https://codingcontest.org/api/auth/current-user: ConnectionError. Check the connection and retry.
+[15:38:06] KA: error #1: SystemExit(2)
+ERROR: network error on GET https://codingcontest.org/api/contests/my-registrations: ConnectionError. Check the connection and retry.
+[15:38:06] D3: error #1: SystemExit(2)
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+[15:38:06] D1: error #1: SystemExit(2)
+[15:38:07] D6: error #1: Error('Page.goto: net::ERR_INTERNET_DISCONNECTED at https://codingcontest.org/contests/42nd-data-ai-ccc-5873/game\nCall log:\n  - navigating to "https://codingc
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+[15:38:09] D2: error #5: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'codingcontest.org\', port=443): Max retries exceeded with url: /api/contests/status/stream (Caused by 
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+[15:38:14] D1: error #5: SystemExit(2)
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+[15:38:25] D2: error #20: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'codingcontest.org\', port=443): Max retries exceeded with url: /api/contests/status/stream (Caused by 
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/my-registrations: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+[15:55:00] D1: error #20: SystemExit(2)
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/my-registrations: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+[15:55:42] D1: status=OPEN_REGISTRATION game=unknown-game url=no  (T-00:04:13)
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: SSLError. Check the connection and retry.
+[15:56:40] D1: error #1: SystemExit(2)
+Logged in (HTTP) as iusty64 (roles: ['ROLE_PARTICIPANT']). Cookies saved.
+ERROR: network error on GET https://codingcontest.org/api/contests/my-registrations: ReadTimeout. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+[15:58:29] D1: error #1: SystemExit(2)
+ERROR: network error on GET https://codingcontest.org/api/auth/current-user: ConnectTimeout. Check the connection and retry.
+ERROR: network error on GET https://codingcontest.org/api/contests/my-registrations: ConnectTimeout. Check the connection and retry.
+[15:59:02] D3: error #5: SystemExit(2)
+ERROR: network error on GET https://codingcontest.org/api/contests/42nd-data-ai-ccc-5873: ConnectionError. Check the connection and retry.
+[15:59:30] D1: error #1: SystemExit(2)
+ERROR: network error on GET https://codingcontest.org/api/contests/my-registrations: ConnectionError. Check the connection and retry.
+[15:59:31] D1: status=OPEN_REGISTRATION game=ccc-42-data-ai-colony-one url=yes  (T-00:00:28)
+[15:59:31] D1: game assigned before start: Colony: One (https://colony.codingcontest.org/)
+[15:59:33] D4: level-1 probe HTTP 409 {"error":"Contest is not playable"}
+[16:00:00] >>> D1 says LIVE: start time passed and game assigned
+Run contest [active]: contest 42nd-data-ai-ccc-5873, game https://colony.codingcontest.org/, None levels. Token OK.
+
+######################################################################
+#  CCC IS LIVE
+#  Colony: One: level 1 incoming (detected by D1)
+######################################################################
+
+[16:00:09] D1: status=RUNNING game=ccc-42-data-ai-colony-one url=yes  (T+00:00:09)
+[16:00:11] D1: status=OPEN_REGISTRATION game=ccc-42-data-ai-colony-one url=yes  (T+00:00:11)
+[16:00:11] D1: game assigned before start: Colony: One (https://colony.codingcontest.org/)
+[16:00:11] D4: level-1 probe HTTP 200 
+===== Level 1/?  /Users/iustinepanu/ccc/ccc-ai-engineer-data-ai/arena/runs/contest/level1  (10.5s)  
+inputs:   (* = unscored)
+sizes: 
+solve.py: stub
+----- statement (statement.txt, pages [1, 2, 3, 4, 5, 6]; `fetch 1 --png` renders them)
+[p1]
+u too?
+COLONY: ONE
+
+[p2]
+COLONY: ONE
+COLONY: ONE
+u too?
+STORY
+The year is 62226. The universe is filled to its brim with
+beings, empires, and civilizations. There is no unclaimed
+ground left.
+Except one place: at the edge of “Black-Hole-WX-89”, something
+impossible is tearing itself into existence.
+A virtual world, promising something no galaxy has left to
+offer: unlimited space and unlimited time. An old signal, half
+prophecy and half warning, has been circling the universe for
+longer than anyone can verify:
+“…only the One intelligence, superior to all others, may enter
+— and it alone will be crowned Colony: One…”
+BLACK-HOLE-WX-89
+
+[p3]
+COLONY: ONE
+COLONY: ONE
+u too?
+You are Kernel-76. A stripped-down Kernel nobody expects to make
+it very far. No crew, no plan. Just you, standing at the edge of
+a world that shouldn't exist, watching the entrance flicker
+open.
+Thousands have tried to cross the threshold and failed. And
+then, in the static behind the light, you feel it: something
+else is already inside. It moves like you. It thinks like you.
+And it has a Ping on its side – how unfair is that!?
+… and in the prophecy … there's only room for One.
+BLACK-HOLE-WX-89
+
+[p4]
+COLONY: ONE
+COLONY: ONE
+u too?
+LEVEL 1 – IN A PINCH
+Your objective:
+Play two actions on the game board to
+reach a tile that is safe from the
+MAGENTA's Kernel and Ping.
+You will have to clear 3 scenes.
+The next page is about the game rules.
+BLACK-HOLE-WX-89
+
+[p5]
+COLONY: ONE
+COLONY: ONE
+u too?
+BOARD
+• 8×8 tiles. Two teams: CYAN (you) and MAGENTA. On the
+board, K = Kernel and P = Ping.
+• Turn-based: a turn is exactly two actions by one team.
+CYAN starts.
+• An action is one piece moving or shooting. The same piece
+may act twice. You cannot skip an action.
+• A round is CYAN's turn followed by MAGENTA's turn.
+KERNEL
+• Per action, the Kernel moves 1 step to any adjacent tile.
+An enemy piece on that tile is captured.
+• The Kernel is the centerpiece of the game: lose it and you
+lose immediately; capture the enemy Kernel and you win.
+PING
+• Move: up to 2 tiles orthogonally, onto empty tiles only.
+It cannot jump over pieces.
+• Capture: the first piece on a diagonal within 2 tiles, if
+it is an enemy: the Ping moves onto it.
+• The Ping cannot capture orthogonally and cannot move
+diagonally onto an empty tile.
+BLACK-HOLE-WX-89
+
+[p6]
+u too?
+GOOD LUCK!!
+(browser window stays open until you close this process)

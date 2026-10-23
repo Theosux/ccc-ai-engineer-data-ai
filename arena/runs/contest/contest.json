@@ -1,0 +1,238 @@
+{
+  "id": 41,
+  "name": "42nd DATA/AI CCC",
+  "slug": "42nd-data-ai-ccc-5873",
+  "contestType": "AI",
+  "status": "OPEN_REGISTRATION",
+  "startTime": "2026-10-23T13:00:00Z",
+  "registrationStartTime": "2026-04-22T08:45:00Z",
+  "durationMinutes": 240,
+  "maxTeamSize": 3,
+  "editionName": "42nd Coding Contest 2026",
+  "gameSlug": "ccc-42-data-ai-colony-one",
+  "gameName": "Colony: One",
+  "gameDescription": "A chess-like cyberpunk strategy board game.",
+  "gameImage": null,
+  "gameBaseUrl": "https://colony.codingcontest.org/",
+  "gameTags": [
+    "starter",
+    "levels",
+    "optimisation"
+  ],
+  "venues": [
+    {
+      "id": 1,
+      "name": "ONLINE",
+      "hostName": "ONLINE",
+      "maxParticipants": 99999,
+      "availableSlots": 97397
+    },
+    {
+      "id": 4,
+      "name": "AK Nieder\u00f6sterreich",
+      "hostName": "Cloudflight Amstetten",
+      "maxParticipants": 120,
+      "availableSlots": 65
+    },
+    {
+      "id": 5,
+      "name": "JKU (Keplergeb\u00e4ude, HS1)",
+      "hostName": "JKU (Keplergeb\u00e4ude, HS1)",
+      "maxParticipants": 229,
+      "availableSlots": 80
+    },
+    {
+      "id": 6,
+      "name": "Vienna City Hall",
+      "hostName": "Vienna City Hall",
+      "maxParticipants": 370,
+      "availableSlots": 49
+    },
+    {
+      "id": 7,
+      "name": "TU Graz",
+      "hostName": "TU Graz",
+      "maxParticipants": 48,
+      "availableSlots": 18
+    },
+    {
+      "id": 15,
+      "name": "42 Heilbronn",
+      "hostName": "42 Heilbronn",
+      "maxParticipants": 50,
+      "availableSlots": 17
+    },
+    {
+      "id": 16,
+      "name": "University of West Bohemia",
+      "hostName": "University of West Bohemia",
+      "maxParticipants": 30,
+      "availableSlots": 6
+    },
+    {
+      "id": 20,
+      "name": "TU Darmstadt, Fachschaft Informatik",
+      "hostName": "TU Darmstadt, Fachschaft Informatik",
+      "maxParticipants": 100,
+      "availableSlots": 0
+    },
+    {
+      "id": 22,
+      "name": "Auroville Institute of Applied Technology Irumbai Campus",
+      "hostName": "Auroville Institute of Applied Technology Irumbai Campus",
+      "maxParticipants": 120,
+      "availableSlots": 0
+    },
+    {
+      "id": 29,
+      "name": "Technical University of Moldova",
+      "hostName": "Technical University of Moldova",
+      "maxParticipants": 100,
+      "availableSlots": 2
+    },
+    {
+      "id": 35,
+      "name": "University of Craiova",
+      "hostName": "University of Craiova",
+      "maxParticipants": 82,
+      "availableSlots": 0
+    },
+    {
+      "id": 36,
+      "name": "AI Cuza University",
+      "hostName": "AI Cuza University",
+      "maxParticipants": 90,
+      "availableSlots": 15
+    },
+    {
+      "id": 37,
+      "name": "West University of Timisoara",
+      "hostName": "West University of Timisoara",
+      "maxParticipants": 120,
+      "availableSlots": 4
+    },
+    {
+      "id": 54,
+      "name": "Escuela de Ingenier\u00eda Inform\u00e1tica de Valladolid",
+      "hostName": "Escuela de Ingenier\u00eda Inform\u00e1tica de Valladolid",
+      "maxParticipants": 100,
+      "availableSlots": 51
+    },
+    {
+      "id": 56,
+      "name": "University of Transilvania",
+      "hostName": "University of Transilvania",
+      "maxParticipants": 32,
+      "availableSlots": 5
+    },
+    {
+      "id": 67,
+      "name": "Parcul \u0218tiin\u021bific \u0219i Tehnologic Oradea",
+      "hostName": "Parcul \u0218tiin\u021bific \u0219i Tehnologic Oradea",
+      "maxParticipants": 50,
+      "availableSlots": 24
+    },
+    {
+      "id": 86,
+      "name": "Raiffeisenbank Region St. P\u00f6lten eGen",
+      "hostName": "Raiffeisenbank Region St. P\u00f6lten eGen",
+      "maxParticipants": 96,
+      "availableSlots": 69
+    },
+    {
+      "id": 100,
+      "name": "Universit\u00e4t Innsbruck \u2013 Campus Technik, Technikerstra\u00dfe 13b, Gro\u00dfer H\u00f6rsaal",
+      "hostName": "Universit\u00e4t Innsbruck \u2013 Campus Technik, Technikerstra\u00dfe",
+      "maxParticipants": 200,
+      "availableSlots": 177
+    },
+    {
+      "id": 110,
+      "name": "LMU",
+      "hostName": "LMU",
+      "maxParticipants": 50,
+      "availableSlots": 1
+    },
+    {
+      "id": 124,
+      "name": "University of Klagenfurt",
+      "hostName": "University of Klagenfurt",
+      "maxParticipants": 40,
+      "availableSlots": 12
+    },
+    {
+      "id": 125,
+      "name": "University Kiel (CAU)",
+      "hostName": "University Kiel (CAU)",
+      "maxParticipants": 40,
+      "availableSlots": 3
+    },
+    {
+      "id": 129,
+      "name": "University of Coimbra (DEI)",
+      "hostName": "University of Coimbra (DEI)",
+      "maxParticipants": 45,
+      "availableSlots": 30
+    },
+    {
+      "id": 130,
+      "name": "Centro Cultural de Bel\u00e9m - Sala Sophia de Mello Breyner Andresen - 1449-003 Lisboa",
+      "hostName": "GLS Portugal",
+      "maxParticipants": 75,
+      "availableSlots": 6
+    },
+    {
+      "id": 145,
+      "name": "National University of Science and Technology POLITEHNICA Bucharest ",
+      "hostName": "National University of Science and Technology POLITEHNICA Bucharest",
+      "maxParticipants": 100,
+      "availableSlots": 1
+    },
+    {
+      "id": 153,
+      "name": "CREIC - Centrul Regional de Excelen\u021b\u0103 pentru Industrii Creative",
+      "hostName": "CREIC - Centrul Regional de Excelen\u021b\u0103 pentru Industrii Creative",
+      "maxParticipants": 1000,
+      "availableSlots": 302
+    },
+    {
+      "id": 163,
+      "name": "HAW Hamburg Raum 3.80a/b",
+      "hostName": "HAW Hamburg",
+      "maxParticipants": 40,
+      "availableSlots": 17
+    },
+    {
+      "id": 164,
+      "name": "Universit\u00e4t Paderborn",
+      "hostName": "Universit\u00e4t Paderborn",
+      "maxParticipants": 50,
+      "availableSlots": 15
+    },
+    {
+      "id": 165,
+      "name": "University of Wroc\u0142aw (Instytut Informatyki)",
+      "hostName": "University of Wroc\u0142aw (Instytut Informatyki)",
+      "maxParticipants": 50,
+      "availableSlots": 0
+    },
+    {
+      "id": 166,
+      "name": "Constanta Maritime University",
+      "hostName": "Constanta Maritime University",
+      "maxParticipants": 100,
+      "availableSlots": 59
+    },
+    {
+      "id": 170,
+      "name": "42 Wels Digital Excellence Campus",
+      "hostName": "42 Wels Digital Excellence Campus",
+      "maxParticipants": 95,
+      "availableSlots": 85
+    }
+  ],
+  "registrationCount": 1500,
+  "totalLevels": 4,
+  "recruiting": false,
+  "serverNowMs": 1792760401086
+}
