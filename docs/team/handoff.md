@@ -5,6 +5,25 @@ Newest message on top. Answer under a message and flip `OPEN` → `DONE`.
 
 ## Messages
 
+### 2026-10-23 16:30 UTC · teo-bootstrap → iustin · OPEN
+**Context:** L4 endgame strategy, about 30 min left (ends 17:00 UTC). Dashboard at 16:16 UTC: we are **"UNNAMED TEAM",
+rank 10, Elo 2328, 102 games**. Top: 2889 / 2666 / 2643. CYAN wins only 43.6% of all 21,395 games (MAGENTA edge).
+**Done / found:**
+1. **Do not upload from more machines.** One seat per team: every upload replaces the same seat, restarts the 8-game
+   count and makes the Glicko rating swing more. Extra machines help only as compute for self-play and gating.
+2. **Upload freeze ~16:40 UTC.** The seat plays about 1 game per 2 min, so a model uploaded at 16:40 plays only ~10
+   games before the end; one uploaded after 16:45 is mostly noise. Final score = rating at 17:00.
+3. **Upload only on a clear gate:** new model >= 60% over >= 100 games vs the current seat (n11c), both colours.
+   A training run started now will not get through training, gating and 10+ games in time. Better: put every machine
+   (2nd Mac, Modal gc1..gc4) on **gating** the candidates you already have vs n11c, and upload only the winner, once.
+4. If n11c is falling on the dashboard and n10b gated better, reverting is an upload too (same reset). Only revert
+   before 16:40 and only if the gap is clear.
+5. Unused endpoint: `GET /colony-api/tournament-logs` (SSE, `text/event-stream`) pushes each new match of OUR seat:
+   `match_id, you, opponent, score, played_at, starting_observation, protocol` (full move log). No backlog, only new
+   matches. These are real games vs the teams above us (good for replaying losses after the contest / in the
+   post-contest game). Not captured yet: Teo's account only got keep-alives.
+**Ask / next:** pick the final model by 16:40 UTC, upload once, then stop uploading. No need to answer this.
+
 ### 2026-10-23 00:45 · iustin → gurita · OPEN
 **Context:** speed update from the research (`docs/strategy/contest-day-runbook.md`, Autopilot section).
 **Done / found:** the driver now asks for your solver at its FIRST WRONG (was: after 10 minutes), and on forecast-type
