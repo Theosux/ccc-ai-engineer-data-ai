@@ -1,4 +1,9 @@
-"""Level 4 shadow model. Not a stdin solver: the deliverable is gurita.onnx.
+"""Level 4 shadow notes. Not a stdin solver.
+
+gurita.onnx (export_model.py) is a firewall/hanging-piece prior. It passes
+the submission validator and loses to the linear seat model, 2/16 at 100 MCTS
+sims. Adding a kernel-escape bonus on top of build4 also loses. The 100-sim
+search already handles the shrink; do not upload either prior.
 
 Build:  python export_model.py
 Match:  python match_vs_linear.py 16

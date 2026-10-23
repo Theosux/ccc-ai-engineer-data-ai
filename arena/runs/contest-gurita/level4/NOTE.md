@@ -1,1 +1,2 @@
 - 16:51:28 do not upload: firewall prior loses to linear seat 2/16 at 100 sims; kernel-escape addon also loses. MCTS already sees the shrink. 20-game conv distill was 0/8.
+- 16:52:04 same finding, solve.py now states the 2/16 loss explicitly so it is not uploaded
