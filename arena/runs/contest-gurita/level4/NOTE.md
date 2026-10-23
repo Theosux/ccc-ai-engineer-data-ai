@@ -1,0 +1,1 @@
+- 16:51:28 do not upload: firewall prior loses to linear seat 2/16 at 100 sims; kernel-escape addon also loses. MCTS already sees the shrink. 20-game conv distill was 0/8.
