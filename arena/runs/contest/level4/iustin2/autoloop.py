@@ -141,7 +141,14 @@ def datasets():
     return [k for k, _ in sorted(pre.items(), key=lambda t: -t[1])]
 
 
+def driver_alive():
+    r = subprocess.run(["pgrep", "-f", "claude --dangerously-skip-permissions --model opus"], capture_output=True, text=True)
+    return bool(r.stdout.strip())
+
+
 def main():
+    if driver_alive() and os.environ.get("FORCE") != "1":
+        sys.exit("the driver Claude session is still running and owns the seat; start this only if it died (FORCE=1 overrides)")
     AUTO.mkdir(parents=True, exist_ok=True)
     champ0 = str((ENV / sys.argv[1]).resolve()) if len(sys.argv) > 1 else str(ENV / "n2b.onnx")
     st = load_state(champ0)

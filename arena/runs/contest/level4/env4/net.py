@@ -3,6 +3,8 @@ usage: net.py train OUT.onnx data_glob [--init prev.pt] [--epochs N] [--ch C] [-
 import sys, glob, argparse, time, numpy as np, torch, torch.nn as nn, torch.nn.functional as F
 
 torch.set_num_threads(12)
+import os
+QMIX = float(os.environ.get("QMIX", "0.5"))
 
 
 class Block(nn.Module):
@@ -26,10 +28,11 @@ class Net(nn.Module):
         s.vfc = nn.Sequential(nn.Linear(128, 64), nn.ReLU(), nn.Linear(64, 1))
 
     def forward(s, x):
+        x = torch.clamp(x, 0.0, 1.0)            # validator feeds numeric extremes
         h = s.body(s.stem(x))
         p = s.pol(h)                                 # (B,64to,8,8from)
         p = torch.flatten(p.permute(0, 2, 3, 1), 1)   # (B, from*64+to)
-        v = torch.tanh(s.vfc(torch.flatten(s.vconv(h), 1))).reshape(-1)
+        v = torch.clamp(torch.tanh(s.vfc(torch.flatten(s.vconv(h), 1))), -1.0, 1.0).reshape(-1)
         return p, v
 
 
@@ -37,8 +40,13 @@ def load(globs):
     P, PI, Z = [], [], []
     for g in globs:
         for f in sorted(glob.glob(g)):
+            if ".tmp" in f:
+                continue
             d = np.load(f)
-            P.append(d["P"]); PI.append(d["PI"]); Z.append(d["Z"])
+            z = d["Z"]
+            if "Q" in d and QMIX > 0:
+                z = (1 - QMIX) * z + QMIX * np.clip(d["Q"], -1, 1)
+            P.append(d["P"]); PI.append(d["PI"]); Z.append(z.astype(np.float32))
     return np.concatenate(P).astype(np.float16), np.concatenate(PI).astype(np.float16), np.concatenate(Z)
 
 
@@ -125,4 +133,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if sys.argv[1] == "reexport":          # net.py reexport X.pt X.onnx ch blocks
+        n = Net(int(sys.argv[4]), int(sys.argv[5])); n.load_state_dict(torch.load(sys.argv[2])); export(n, sys.argv[3])
+    else:
+        main()

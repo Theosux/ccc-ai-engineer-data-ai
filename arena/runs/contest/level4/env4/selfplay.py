@@ -16,7 +16,7 @@ def worker(args):
     evs = [OnnxEvaluator(Path(m)) for m in models]
     rng = np.random.default_rng(seed)
     cfg = mcts.MCTSConfig(simulations=sims, batch_size=8)
-    P, PI, Z, R = [], [], [], []
+    P, PI, Z, R, Q = [], [], [], [], []
     wins = 0
     for g in range(ngames):
         pool = [0] + list(range(len(evs)))
@@ -34,13 +34,17 @@ def worker(args):
             if temp <= 1e-3 and rng.random() < 0.1:
                 temp = 1.0       # extra exploration
             idx = mcts.select_action_index(root, temp, rng=rng)
-            rec.append((planes, pi, team, env.round_number))
+            nt = sum(root.N.values())
+            q = sum(root.W.values()) / nt if nt else 0.0
+            rec.append((planes, pi, team, env.round_number, q))
             env.step(idx)
         wins += env.winner == constants.CYAN
-        for planes, pi, team, rnd in rec:
+        for planes, pi, team, rnd, q in rec:
             P.append(planes.astype(np.float16)); PI.append(pi.astype(np.float16))
-            Z.append(1.0 if team == env.winner else -1.0); R.append(rnd)
-    np.savez_compressed(out, P=np.array(P), PI=np.array(PI), Z=np.array(Z, np.float32), R=np.array(R, np.int16))
+            Z.append(1.0 if team == env.winner else -1.0); R.append(rnd); Q.append(q)
+        if (g + 1) % 20 == 0 or g + 1 == ngames:   # checkpoint so partial runs are usable
+            np.savez_compressed(out + ".tmp.npz", P=np.array(P), PI=np.array(PI), Z=np.array(Z, np.float32), R=np.array(R, np.int16), Q=np.array(Q, np.float32))
+            os.replace(out + ".tmp.npz", out)
     return wins, ngames, len(Z)
 
 
