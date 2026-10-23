@@ -1,0 +1,1 @@
+- 16:13:37 L3 passed: handcrafted ONNX (level3/env/build.py: material value tanh, centrality policy) via colony/modelrun.py 3 scene-1 3-1 model.onnx. Now L4 tournament (optimisation).
