@@ -1,0 +1,1 @@
+- 16:17:29 L4 tournament: seat holds v1.onnx (level4/env4/build4.py linear model, beats L3 model 32/40). Upload = colony/upload4.py model.onnx (POST /colony-api/model-upload). Training AlphaZero-lite: env4/selfplay.py + net.py (torch). Teammate: ideas welcome via note, do NOT upload.
