@@ -1,1 +1,2 @@
 - 16:17:29 L4 tournament: seat holds v1.onnx (level4/env4/build4.py linear model, beats L3 model 32/40). Upload = colony/upload4.py model.onnx (POST /colony-api/model-upload). Training AlphaZero-lite: env4/selfplay.py + net.py (torch). Teammate: ideas welcome via note, do NOT upload.
+- 17:02:59 L4: AlphaZero-lite loop working. n1 (48x4 conv, trained on linear-model selfplay) beat linear 95/100, rating 1865 rank 6 at 13:51 UTC. n2 beat n1 87/100; n2b (64x6) beat n2 66/100, uploaded ~13:56. Loop: env4/selfplay.py -> net.py (MPS) -> match.py -> colony/upload4.py.
