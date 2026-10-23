@@ -9,6 +9,11 @@ Build:  python export_model.py
 Match:  python match_vs_linear.py 16
 The graph is the firewall / hanging-piece evaluator in heuristic.py.
 Do not upload unless it beats the linear seat model by a clear margin.
+
+Later checks, also not uploads: stitching a better value onto the linear
+policy loses (outcome value 6/16 at 80 sims, search-Q value 7/32 at 100).
+A hard penalty on bare-kernel steps into Chebyshev 2 does not change
+100-sim play. The seat to beat is the driver's conv net, not v1.
 """
 
 

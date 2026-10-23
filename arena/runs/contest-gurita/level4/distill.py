@@ -67,7 +67,7 @@ def train(P, PI, Z, epochs=8, ch=32, blocks=2):
             p, v = net(Pt[b])
             legal = PIt[b] > 0
             lp = F.log_softmax(p.masked_fill(~legal, -1e9), dim=1)
-            loss = -(PIt[b] * lp).sum(1).mean() + F.mse_loss(v, Zt[b])
+            loss = -(PIt[b] * lp).sum(1).mean() + 4.0 * F.mse_loss(v, Zt[b])
             opt.zero_grad(); loss.backward(); opt.step(); sched.step()
         net.eval()
         with torch.no_grad():

@@ -1,2 +1,4 @@
 - 16:51:28 do not upload: firewall prior loses to linear seat 2/16 at 100 sims; kernel-escape addon also loses. MCTS already sees the shrink. 20-game conv distill was 0/8.
 - 16:52:04 same finding, solve.py now states the 2/16 loss explicitly so it is not uploaded
+- 17:25 value swap loses. Outcome-net value (sign acc 0.96) on the exact linear policy: 6/16 at 80 sims. Search-Q value (corr 0.84 with 100-sim Q): 7/32 at 100 sims. A sharper value pulls MCTS off the prior. Do not replace n2b's value with fit.py. Bare-kernel logit penalty is a no-op at 100 sims; both models already play that terminal.
+- 17:19:07 value swap loses: outcome value 6/16 at 80 sims, search-Q value 7/32 at 100 sims, both on the exact linear policy. Do not replace the conv net value with fit.py. Bare-kernel penalty is a no-op at 100 sims.
