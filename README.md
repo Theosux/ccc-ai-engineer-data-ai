@@ -1,4 +1,4 @@
-# Cloudflight Coding Contest Data/AI 2026
+# [Cloudflight Coding Contest Data/AI 2026](https://codingcontest.org)
 
 | Ranking | Place |
 |---|---|
